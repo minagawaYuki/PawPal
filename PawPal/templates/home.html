@@ -1,14 +1,10 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home</title>
 </head>
 <body>
-    <h1>Home</h1>
-    <p>This is the Home page.</p>
-    <p>Go to <a href="/about">About</a> page.</p>
+    <h2>Welcome, {{ user.username }}!</h2>
+    <a href="{% url 'logout' %}">Log Out</a>
 </body>
 </html>

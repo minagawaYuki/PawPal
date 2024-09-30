@@ -1,27 +1,26 @@
-from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
+from django.contrib.auth.models import User
 
-class User(AbstractUser):
-    is_pet_owner = models.BooleanField(default=False)
-    is_caregiver = models.BooleanField(default=False)
+class UserProfile(models.Model):
+    ROLE_CHOICES = [
+        ('pet_owner', 'Pet Owner'),
+        ('caretaker', 'Caretaker'),
+    ]
 
-    groups = models.ManyToManyField(
-        Group,
-        related_name='custom_user_set',
-        blank=True,
-        help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
-        related_query_name='custom_user',
-    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
 
-    user_permissions = models.ManyToManyField(
-        Permission,
-        related_name='custom_user_set',
-        blank=True,
-        help_text='Specific permissions for this user.',
-        related_query_name='custom_user',
-    )
+    def __str__(self):
+        return self.user.username
 
-    def save(self, *args, **kwargs):
-        if self.is_pet_owner and self.is_caregiver:
-            raise ValueError("User cannot be both Pet Owner and Caregiver.")
-        super().save(*args, **kwargs)
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.userprofile.save()
