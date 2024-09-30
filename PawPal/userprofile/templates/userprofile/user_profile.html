@@ -1,11 +1,41 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
+    <link rel="stylesheet" href="../../../static/css/output.css">
 </head>
 <body>
-    <h1>User Profile</h1>
+    <h1 class="text-lg">User Profile</h1>
+    <nav></nav>
+    <div class="container bg-background border-2">
+        <div class="user-field flex w-full p-16 justify-center">
+            <div class="inputfields w-fit flex flex-col items-center bg-container px-32 py-16 gap-y-4 rounded-lg">
+                <div class="firstname-field flex flex-col">
+                    <label class="w-fit text-sm" for="firstname">First Name</label>
+                    <input class="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" type="text" id="firstname">
+                </div>
+                <div class="firstname-field flex flex-col">
+                    <label class="w-fit text-sm" for="firstname">Last Name</label>
+                    <input class="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" type="text" id="firstname">
+                </div>
+                <div class="firstname-field flex flex-col">
+                    <label class="w-fit text-sm" for="firstname">Username</label>
+                    <input class="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" type="text" id="firstname">
+                </div>
+                <div class="firstname-field flex flex-col">
+                    <label class="w-fit text-sm" for="firstname">Email</label>
+                    <input class="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" type="text" id="firstname">
+                </div>
+                <div class="firstname-field flex flex-col">
+                    <label class="w-fit text-sm" for="firstname">Password</label>
+                    <input class="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" type="text" id="firstname">
+                </div>
+                <button class="w-fit text-white bg-button px-6 py-2 hover:cursor-pointer hover:bg-black rounded-full" type="submit">Save</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
