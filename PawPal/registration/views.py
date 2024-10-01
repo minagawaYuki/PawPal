@@ -14,8 +14,8 @@ def login_view(request):
         user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
-            return redirect('login.html')
-    return render(request, 'login.html')
+            return redirect('home.html')
+    return render(request, 'home.html')
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
@@ -37,4 +37,8 @@ def register_user(request):
             return redirect('login.html')
     else:
         form = RegisterForm()
-    return render(request, 'registerform.html', {'form': form})
+    return render(request, 'registrationform.html', {'form': form})
+
+
+def home_page(request):
+    return render(request, 'home.html')

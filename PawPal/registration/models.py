@@ -24,3 +24,23 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.userprofile.save()
+
+
+
+
+
+
+
+
+"""
+Class User(models.Models):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    Username = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
+
+
+    def__str__(self):
+        return self.Username
+"""
