@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'userprofile',
     'transactions',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
