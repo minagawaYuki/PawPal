@@ -8,9 +8,15 @@
     <link rel="stylesheet" href="../../../static/css/output.css">
 </head>
 <body>
-    <h1 class="text-lg">User Profile</h1>
-    <nav></nav>
-    <div class="container bg-background border-2">
+    <nav>
+        <ul class="flex text-lg w-full justify-center items-center bg-background gap-x-12">
+            <li class="my-4"><a href="/">Dashboard</a></li>
+            <li><a href="userprofile">View Profile</a></li>
+            <li><a href="/">Book a Schedule</a></li>
+            <li><a href="/">Transaction History</a></li>
+        </ul>
+    </nav>
+    <div class="container bg-background">
         <div class="user-field flex w-full p-16 justify-center">
             <form class="inputfields w-fit flex flex-col items-center bg-container px-32 py-16 gap-y-4 rounded-lg" method="post">
                 {% csrf_token %}
