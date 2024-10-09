@@ -1,7 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   mode: 'jit',
-  content: ["./userprofile/templates/userprofile/*.{html,js}"],
+  content: ["./userprofile/templates/userprofile/*.{html,js}",
+            "./register/templates/register/*.{html,js}",
+            "./transactions/templates/transactions/*.{html,js}"],
   theme: {
     colors: {
       'textfield': '#FAF7F0',

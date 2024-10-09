@@ -9,11 +9,11 @@
 </head>
 <body>
     <nav>
-        <ul class="flex text-lg w-full justify-center items-center bg-background gap-x-12">
-            <li class="my-4"><a href="/">Dashboard</a></li>
-            <li><a href="userprofile">View Profile</a></li>
-            <li><a href="/">Book a Schedule</a></li>
-            <li><a href="/">Transaction History</a></li>
+        <ul class="flex text-lg w-full justify-center font-semibold items-center bg-background gap-x-12">
+            <li class="my-4"><a href="../../servlist/dashboard">Dashboard</a></li>
+            <li><a href="../userprofile">View Profile</a></li>
+            <li><a href="../../servlist/book">Book a Schedule</a></li>
+            <li><a href="../../transactions">Transaction History</a></li>
         </ul>
     </nav>
     <div class="container bg-background">
@@ -44,18 +44,6 @@
                 <button class="w-fit text-white bg-button px-6 py-2 hover:cursor-pointer hover:bg-black rounded-full" type="submit">Save</button>
             </form>
         </div>
-        <h1>Users</h1>
-        <ul>
-
-            <li>First Name: {{ user.first_name }}</li>
-            <li>Last Name: {{ user.last_name }}</li>
-            <li>Email: {{ user.email }}</li>
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="user_id" value="{{ user.id }}">
-                <button type="submit">Save</button>
-            </form>
-        </ul>
     </div>
 </body>
 </html>
