@@ -1,0 +1,62 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="../../../static/css/output.css">
+</head>
+<body>
+    <nav>
+        <ul class="flex text-lg w-full justify-center font-semibold items-center bg-background gap-x-12">
+            <li class="my-4"><a href="../../servlist/dashboard">Dashboard</a></li>
+            <li><a href="../userprofile">View Profile</a></li>
+            <li><a href="../../servlist/book">Book a Schedule</a></li>
+            <li><a href="../../servlist/dashboard">Transaction History</a></li>
+        </ul>
+    </nav>
+    <div class="container bg-background">
+        <div class="user-field flex w-full p-16 justify-center">
+            <form class="inputfields w-fit flex flex-col items-center bg-container px-32 py-16 gap-y-4 rounded-lg" method="post">
+                {% csrf_token %}
+                <h1 class="text-lg font-bold">Register</h1>
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+                <div class="firstname-field flex flex-col">
+                    <label class="w-fit text-sm" for="firstname">First Name</label>
+                    {% render_field form.first_name placeholder="First Name" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
+                </div>
+                <div class="firstname-field flex flex-col">
+                    <label class="w-fit text-sm" for="firstname">Last Name</label>
+                    {% render_field form.last_name placeholder="Last Name" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
+                </div>
+                <div class="firstname-field flex flex-col">
+                    <label class="w-fit text-sm" for="firstname">Username</label>
+                    {% render_field form.username placeholder="Username" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
+                </div>
+                <div class="firstname-field flex flex-col">
+                    <label class="w-fit text-sm" for="firstname">Email</label>
+                    {% render_field form.email placeholder="Email" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
+                </div>
+                <div class="firstname-field flex flex-col">
+                    <label class="w-fit text-sm" for="firstname">Password</label>
+                    {% render_field form.password placeholder="Password" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
+                </div>
+                <button class="w-fit text-white bg-button px-6 py-2 hover:cursor-pointer hover:bg-black rounded-full" type="submit">Register</button>
+            </form>
+        </div>
+        <h1>Users</h1>
+        <ul>
+
+            <li>First Name:</li>
+            <li>Last Name:</li>
+            <li>Email:</li>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+                <button type="submit">Save</button>
+            </form>
+        </ul>
+    </div>
+</body>
+</html>
