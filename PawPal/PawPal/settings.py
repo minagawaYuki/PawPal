@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'userprofile',
     'transactions',
     'widget_tweaks',
+    'servlist',
+    'register',
+    'login',
 ]
 
 MIDDLEWARE = [
@@ -120,6 +123,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+LOGIN_URL = 'login'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')

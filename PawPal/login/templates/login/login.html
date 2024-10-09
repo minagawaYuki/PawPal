@@ -13,35 +13,24 @@
             <li class="my-4"><a href="../../servlist/dashboard">Dashboard</a></li>
             <li><a href="../userprofile">View Profile</a></li>
             <li><a href="../../servlist/book">Book a Schedule</a></li>
-            <li><a href="../../transactions">Transaction History</a></li>
+            <li><a href="../../servlist/dashboard">Transaction History</a></li>
         </ul>
     </nav>
-    <div class="container bg-background">
+    <div class="container bg-background h-screen">
         <div class="user-field flex w-full p-16 justify-center">
             <form class="inputfields w-fit flex flex-col items-center bg-container px-32 py-16 gap-y-4 rounded-lg" method="post">
                 {% csrf_token %}
-                <input type="hidden" name="user_id" value="{{ user.id }}">
-                <div class="firstname-field flex flex-col">
-                    <label class="w-fit text-sm" for="firstname">First Name</label>
-                    {% render_field form.first_name placeholder="First Name" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
-                </div>
-                <div class="firstname-field flex flex-col">
-                    <label class="w-fit text-sm" for="firstname">Last Name</label>
-                    {% render_field form.last_name placeholder="Last Name" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
-                </div>
+                <h1 class="text-lg font-bold">Login to your account</h1>
                 <div class="firstname-field flex flex-col">
                     <label class="w-fit text-sm" for="firstname">Username</label>
                     {% render_field form.username placeholder="Username" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
                 </div>
                 <div class="firstname-field flex flex-col">
-                    <label class="w-fit text-sm" for="firstname">Email</label>
-                    {% render_field form.email placeholder="Email" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
-                </div>
-                <div class="firstname-field flex flex-col">
                     <label class="w-fit text-sm" for="firstname">Password</label>
                     {% render_field form.password placeholder="Password" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
                 </div>
-                <button class="w-fit text-white bg-button px-6 py-2 hover:cursor-pointer hover:bg-black rounded-full" type="submit">Save</button>
+                <button class="w-fit text-white bg-button px-6 py-2 hover:cursor-pointer hover:bg-black rounded-full" type="submit">Login</button>
+                <p>Don't have an account? <a class="underline" href="../../../register">Register</a></p>
             </form>
         </div>
     </div>
