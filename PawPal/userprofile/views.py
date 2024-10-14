@@ -1,15 +1,18 @@
 from django.shortcuts import render, redirect
-from .models import User
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
 from .forms import UpdateProfileForm
 
 # Create your views here.
+@login_required
 def user_profile(request):
     users = User.objects.all()
-    user = User.objects.get(id=1)
+    user = request.user
     if request.method == 'POST':
         form = UpdateProfileForm(request.POST)
         if form.is_valid():
-            user_id = request.POST.get('user_id')
+            user_id = user.id
             user = User.objects.get(id=user_id)
             user.first_name = form.cleaned_data['first_name']
             user.last_name = form.cleaned_data['last_name']
@@ -17,7 +20,7 @@ def user_profile(request):
             user.email = form.cleaned_data['email']
             user.password = form.cleaned_data['password']
             user.save()
-            return redirect('user_profile')
+            return render(request, 'userprofile/user_profile.html', {'users': users, 'form': form, 'user': user})
     else:
         form = UpdateProfileForm()
         form.fields['first_name'].initial = user.first_name
