@@ -1,0 +1,68 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions</title>
+    <link rel="stylesheet" href="../../../static/css/output.css">
+</head>
+<body>
+    <div class="container h-screen bg-background flex flex-col justify-center items-center pb-12">
+        <nav>
+            <ul class="flex text-lg w-full justify-center font-semibold items-center gap-x-12">
+                <li class="my-4"><a href="../../servlist/dashboard">Dashboard</a></li>
+                <li><a href="../userprofile">View Profile</a></li>
+                <li><a href="../../servlist/book">Book a Schedule</a></li>
+                <li><a href="../../servlist/dashboard">Transaction History</a></li>
+            </ul>
+        </nav>
+        <div class="transaction-field flex flex-col w-10/12 h-full bg-container rounded-xl p-16">
+            <h1 class="text-lg font-bold text-center">Your Transactions</h1>
+            <table class="pb-5 border-separate border-spacing-5 mt-5">
+                <tr class="border-b-2">
+                    <th class="text-center">Caretaker</th>
+                    <th>Service</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Pet Name</th>
+                    <th>Pet Type</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td class="text-center">Amanda Collins</td>
+                    <td class="text-center">Pet Grooming</td>
+                    <td class="text-center">November 16, 2024</td>
+                    <td class="text-center">9:00 AM</td>
+                    <td class="text-center">Cupcake</td>
+                    <td class="text-center">Dog</td>
+                    <td class="text-center font-semibold text-pending_text_color bg-pending_background rounded-full">Pending</td>
+
+                </tr>
+                <tr>
+                    <td class="text-center">Tony Stark</td>
+                    <td class="text-center">Pet Boarding</td>
+                    <td class="text-center">October 29, 2024</td>
+                    <td class="text-center">9:30 AM</td>
+                    <td class="text-center">Jarvis</td>
+                    <td class="text-center">Dog</td>
+                    <td class="text-center font-semibold text-finished_text_background bg-finished_background rounded-full">Finished</td>
+
+                </tr>
+                <tr>
+                    <td class="text-center">Michaela Anderson</td>
+                    <td class="text-center">Pet Grooming</td>
+                    <td class="text-center">October 25, 2024</td>
+                    <td class="text-center">9:30 AM</td>
+                    <td class="text-center">Jarvis</td>
+                    <td class="text-center">Dog</td>
+                    <td class="text-center font-semibold text-finished_text_background bg-finished_background rounded-full">Finished</td>
+
+                </tr>
+            </table>
+            
+            <div class="transactions"></div>
+        </div>
+    </div>
+</body>
+</html>
