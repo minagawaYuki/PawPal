@@ -3,7 +3,8 @@ module.exports = {
   mode: 'jit',
   content: ["./userprofile/templates/userprofile/*.{html,js}",
             "./register/templates/register/*.{html,js}",
-            "./transactions/templates/transactions/*.{html,js}"],
+            "./transactions/templates/transactions/*.{html,js}",
+            "./admindashboard/templates/admindashboard/*.{html,js}"],
   theme: {
     colors: {
       'textfield': '#FAF7F0',
