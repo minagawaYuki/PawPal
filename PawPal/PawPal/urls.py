@@ -21,5 +21,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.homepage),
     path('about/', views.about),
-    path('userprofile/', include('userprofile.urls'))
+    path('userprofile/', include('userprofile.urls')),
+    path('servlist/', include('servlist.urls')),
+    path('register/', include('register.urls')),
+    path('login/', include('login.urls')),
+    path('transactions/', include('transactions.urls')),
+    path('admindashboard', include('admindashboard.urls')),
 ]
