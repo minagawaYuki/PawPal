@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 
 # Create your models here.
 class Pet(models.Model):
@@ -22,7 +22,7 @@ class Service(models.Model):
         return self.services
 
 class Booking(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Link to the logged-in user
+    #user = models.ForeignKey(User, on_delete=models.CASCADE)  # Link to the logged-in user
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     date = models.DateField()
