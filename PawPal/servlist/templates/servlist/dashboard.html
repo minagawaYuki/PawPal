@@ -12,10 +12,16 @@
     <header>
         <nav>
             <ul>
+<<<<<<< HEAD:PawPal/servlist/templates/servlist/dashboard.html
                 <li><a href="../dashboard">Dashboard</a></li>
                 <li><a href="../../userprofile">View Profile</a></li>
                 <li><a href="../book">Book a Schedule</a></li>
                 <!-- <li><a href="{% static 'book.html' %}">Book a Schedule</a></li> -->
+=======
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a>View Profile</a></li>
+                <li><a href="/book">Book a Schedule</a></li>
+>>>>>>> origin/services:Charles' Assigned Features/pawpal/servlist/templates/servlist/dashboard.html
                 <li><a>Transaction History</a></li>
             </ul>
         </nav>
@@ -32,6 +38,30 @@
 
         <div class="bottom-left">
             <p>Current Bookings</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Service Type</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                        <tr>
+                            <td>{{ booking.service.services }}</td>
+                            <td>{{ booking.date }}</td>
+                            <td>{{ booking.time }}</td>
+                            <td>Pending</td>  <!-- Default status -->
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4">No bookings available.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
 
         <div class="bottom-right">
