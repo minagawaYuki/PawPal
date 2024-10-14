@@ -29,6 +29,9 @@
                     <label class="w-fit text-sm" for="firstname">Password</label>
                     {% render_field form.password placeholder="Password" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
                 </div>
+                {% if error %}
+                <p>Invalid credentials</p>
+                {% endif %}
                 <button class="w-fit text-white bg-button px-6 py-2 hover:cursor-pointer hover:bg-black rounded-full" type="submit">Login</button>
                 <p>Don't have an account? <a class="underline" href="../../../register">Register</a></p>
             </form>
