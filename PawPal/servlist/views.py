@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect
 from .models import Pet, Service, Booking
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
+@login_required
 def dashboard_view(request):
     # Fetch all bookings
-    bookings = Booking.objects.all().select_related('pet', 'service')  # Use select_related to fetch related data efficiently
+    bookings = Booking.objects.filter(user_id=request.user.id).select_related('pet', 'service')  # Use select_related to fetch related data efficiently
     return render(request, 'servlist/dashboard.html', {'bookings': bookings})
 
+@login_required
 def book_schedule(request):
     if request.method == "POST":
         # Retrieve form data
@@ -26,7 +29,7 @@ def book_schedule(request):
             return HttpResponse(f"Service '{service_name}' does not exist in our system.")
 
         # Create a new booking
-        booking = Booking.objects.create(pet=pet, service=service, date=date, time=time)
+        booking = Booking.objects.create(user=request.user, pet=pet, service=service, date=date, time=time)
         booking.save()
 
         # Redirect to dashboard after successful booking
