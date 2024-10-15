@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawPal</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'servlist/css/servicelist.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // JavaScript to show pop-up confirmation using SweetAlert2
+        function showConfirmationMessage(event) {
+            event.preventDefault(); // Prevent form from being submitted immediately
+
+            // Get form field values
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const petType = document.getElementById('pet_type').value;
+            const petName = document.getElementById('pet_name').value;
+            const service = document.getElementById('service').value;
+
+            // Check if all fields are filled out
+            if (date && time && petType && petName && service) {
+                // Display confirmation pop-up with SweetAlert2
+                Swal.fire({
+                    title: 'Confirm Booking Details',
+                    html: `<b>Date:</b> ${date}<br><b>Time:</b> ${time}<br><b>Pet:</b> ${petName} (${petType})<br><b>Service:</b> ${service}`,
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, Confirm',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire('Booking Confirmed!', '', 'success').then(() => {
+                            // Submit the form after showing confirmation
+                            document.querySelector('form').submit();
+                        });
+                    }
+                });
+            } else {
+                Swal.fire("Please fill out all fields before confirming.", "", "warning");
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../dashboard">Dashboard</a></li>
+                <li><a>View Profile</a></li>
+                <li><a href="../book">Book a Schedule</a></li>
+                <li><a>Transaction History</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="outer-container">
+        <div class="inputs">
+            <form action="" method="POST" onsubmit="showConfirmationMessage(event)">
+                {% csrf_token %}
+                <!-- Date input -->
+                <div class="form-group">
+                    <label for="date">Select Date:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+
+                <!-- Time input -->
+                <div class="form-group">
+                    <label for="time">Select Time:</label>
+                    <input type="time" id="time" name="time" required>
+                </div>
+
+                <!-- Pet Type input -->
+                <div class="form-group">
+                    <label for="pet_type">Pet Type:</label> 
+                    <input type="text" id="pet_type" name="pet_type" placeholder="Ex. Shark" required>
+                </div>
+
+                <!-- Pet Name input -->
+                <div class="form-group">
+                    <label for="pet_name">Pet Name:</label>
+                    <input type="text" id="pet_name" name="pet_name" placeholder="Ex. Bella" required>
+                </div>
+
+                <!-- Service dropdown -->
+                <div class="form-group">
+                    <label for="service">Select Service:</label>
+                    <select id="service" name="service" required>
+                        {% for service in services %}
+                            <option value="{{ service.services }}">{{ service.services }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Confirm button -->
+                <button type="submit" class="confirm-btn">Confirm</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
