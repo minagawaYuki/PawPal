@@ -1,15 +1,1 @@
-# Ignore virtual environment folders
 myvirtenv/
-.venv/
-
-# Ignore Python cache files and directories
-__pycache__/
-*.pyc
-
-# Ignore SQLite database files
-*.sqlite3
-
-# Ignore migration files and their bytecode
-*/migrations/*.py
-*/migrations/__pycache__/
-*/migrations/*.pyc
