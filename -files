@@ -1,0 +1,37 @@
+[33m0dd7e60d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mservices[m[33m, [m[1;31morigin/services[m[33m)[m updates gitignore
+[33m6dc660b0[m untracked files
+[33m39474993[m gitignore stuff
+[33mc769de3b[m migration adjust
+[33mf83e3d60[m removed pyc
+[33md9b98cbc[m deleted venv
+[33mf4e99676[m updated gitignore
+[33mb929c6c3[m log in and book sched
+[33m08c697e2[m Merge branch 'services' of https://github.com/minagawaYuki/PawPal into services
+[33m4ed1eb84[m commented user key
+[33mca6c55db[m Merge pull request #9 from minagawaYuki/userprofile
+[33m355e9199[m[33m ([m[1;31morigin/userprofile[m[33m)[m venv
+[33mfa473332[m gitignore adjustment
+[33mc5026fec[m venv fix
+[33m0a09ed67[m resolving
+[33mfdf116bf[m about .pyc
+[33m4e895f53[m added files in gitignore
+[33m85ed42ee[m resolved merge conflicts
+[33ma0563edc[m added pop up window in booking page
+[33m40ef53da[m updated login
+[33mf7515507[m displayed book sched
+[33m7fcdb010[m updated transactions
+[33m8a6ce683[m login register userprofile
+[33m2ba5c165[m Merge pull request #4 from minagawaYuki/services
+[33m8214cd4e[m Merge pull request #2 from minagawaYuki/userprofile
+[33m27121c50[m Nav Bar
+[33m6273148c[m Merge pull request #1 from minagawaYuki/userprofile
+[33mee8f2ba7[m partial book and dashboard ui
+[33m1289b889[m User Profile Model
+[33m438592c2[m User Profile Template
+[33m03f9664c[m migratrions
+[33m8c2bb0a5[m[33m ([m[1;32mmain[m[33m)[m first commit
+[33mc02f348a[m first commit
+[33m76ad37a2[m Django Project Initialization
+[33m0103ecaf[m README.md
+[33m9952fec9[m Create README.md
+[33m2fb8cea1[m Project Initialization
