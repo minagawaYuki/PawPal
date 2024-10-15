@@ -6,8 +6,9 @@ from django.http import HttpResponse
 @login_required
 def dashboard_view(request):
     # Fetch all bookings
+    first_name = request.user.first_name
     bookings = Booking.objects.filter(user_id=request.user.id).select_related('pet', 'service')  # Use select_related to fetch related data efficiently
-    return render(request, 'servlist/dashboard.html', {'bookings': bookings})
+    return render(request, 'servlist/dashboard.html', {'bookings': bookings, 'first_name': first_name})
 
 @login_required
 def book_schedule(request):
