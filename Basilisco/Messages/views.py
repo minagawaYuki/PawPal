@@ -5,8 +5,8 @@ from .forms import RegisterForm
 from django.contrib import messages
 
 
-def home(request):
-    return render(request, "home.html")
+def chat_room(request):
+    return render(request, "chat.html")
 
 def register_view(request):
     if request.method == 'POST':
