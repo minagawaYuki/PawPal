@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'servlist',
     'register',
     'login',
+    'admindashboard',
 ]
 
 MIDDLEWARE = [

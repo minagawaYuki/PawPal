@@ -100,9 +100,7 @@ nav ul li a:hover {
     grid-column: 1 / 2;    /* First column */
     grid-row: 2 / 3;       /* Second row */
     border: 1px solid #ccc;
-    display: flex;
-    align-items: top;
-    justify-content:left;
+    display: block;
     padding: 10px;
     background-color:#FAF7F0;
     margin-left: 50px;
@@ -114,8 +112,19 @@ nav ul li a:hover {
 .bottom-left p {
     font-weight: bold;
     font-size: larger;
-    margin-top: 20px;
-    margin-left: 25px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.bottom-left table {
+    width: 100%;  /* Ensure the table takes up full width */
+    margin-top: 20px; /* Add margin-top for extra space between title and table */
+}
+
+.bottom-left th, .bottom-left td {
+    padding: 10px;
+    text-align: left;
 }
 
 /* Bottom right: Message Us button */
@@ -204,4 +213,19 @@ nav ul li a:hover {
 .inputs {
     margin-left: 10%;
     margin-top: 20%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
 }

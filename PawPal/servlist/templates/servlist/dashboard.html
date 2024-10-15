@@ -23,7 +23,7 @@
 
     <div class="outer-container">
         <div class="top-left">
-            <p>Hello, Amanda</p>
+            <p>Hello, {{ first_name }}</p>
         </div>
 
         <div class="top-right">
@@ -32,6 +32,30 @@
 
         <div class="bottom-left">
             <p>Current Bookings</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Service Type</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                        <tr>
+                            <td>{{ booking.service.services }}</td>
+                            <td>{{ booking.date }}</td>
+                            <td>{{ booking.time }}</td>
+                            <td>Pending</td>  <!-- Default status -->
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4">No bookings available.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
 
         <div class="bottom-right">
