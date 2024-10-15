@@ -18,7 +18,7 @@ def user_profile(request):
             user.last_name = form.cleaned_data['last_name']
             user.username = form.cleaned_data['username']
             user.email = form.cleaned_data['email']
-            user.password = form.cleaned_data['password']
+            user.set_password(form.cleaned_data['password'])
             user.save()
             return render(request, 'userprofile/user_profile.html', {'users': users, 'form': form, 'user': user})
     else:
