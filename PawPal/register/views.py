@@ -18,6 +18,6 @@ def register(request):
         else:
             print(form.errors)
     else:
-        logout(request)
+        logout()
         form = RegisterForm()
     return render(request, 'register/register.html', {'form': form})
