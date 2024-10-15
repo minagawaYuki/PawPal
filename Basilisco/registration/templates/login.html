@@ -93,6 +93,9 @@
             justify-content: center;
             align-items: center;
         }
+        p {
+            text-align: center;
+        }
  
     .login-container button, .login-container .login-google {
         width: 100%;
@@ -149,6 +152,9 @@
                 <label><input type="checkbox" name="remember_me"> Remember Me</label>
                 <a href="#">Forgot Password?</a>
             </div>
+            {% if error %}
+            <p>{{ error }}</p>
+            {% endif %}
             <button type="submit">Log In</button>
         </form>
  
