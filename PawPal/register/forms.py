@@ -1,13 +1,20 @@
 from django import forms
-from django.contrib.auth.models import User
+from .models import CustomUser, Caretaker
 
 class RegisterForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ['first_name', 'last_name', 'username', 'email', 'password']
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'username', 'email', 'password', 'user_type']
         widgets = {
             'password': forms.PasswordInput(),
         }
+
+    USER_TYPES = [
+        ('owner', 'Pet Owner'),
+        ('caretaker', 'Pet Caretaker'),
+    ]
+
+    user_type = forms.ChoiceField(choices=USER_TYPES, widget=forms.RadioSelect)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

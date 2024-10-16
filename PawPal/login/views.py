@@ -14,7 +14,9 @@ def login_page(request):
 
         if user is not None:
             login(request, user)
-            return redirect('dashboard')
+            if(request.user.user_type == 'pet_owner'):
+                return redirect('dashboard')
+            return redirect('book')
         else:
             error = "Invalid credentials"
             return render(request, 'login/login.html', {'form': form, 'error': error})
