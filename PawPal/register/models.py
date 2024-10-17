@@ -75,3 +75,5 @@ class Booking(models.Model):
 
     def __str__(self) -> str:
         return self.pet_owner.username
+    
+

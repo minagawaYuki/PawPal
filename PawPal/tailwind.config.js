@@ -4,7 +4,9 @@ module.exports = {
   content: ["./userprofile/templates/userprofile/*.{html,js}",
             "./register/templates/register/*.{html,js}",
             "./transactions/templates/transactions/*.{html,js}",
-            "./admindashboard/templates/admindashboard/*.{html,js}"],
+            "./admindashboard/templates/admindashboard/*.{html,js}",
+            "./caregiver/templates/caregiver/*.{html,js}",
+            "./service_listings/templates/service_listings/*.{html,js}",],
   theme: {
     colors: {
       'textfield': '#FAF7F0',
