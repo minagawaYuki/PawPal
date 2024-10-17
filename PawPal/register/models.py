@@ -52,5 +52,8 @@ class CustomUser(AbstractBaseUser):
     
 class Caretaker(models.Model):
     user = models.OneToOneField('CustomUser', on_delete=models.CASCADE)
-    successful_bookings = models.IntegerField()
-    experience = models.IntegerField()
+    successful_bookings = models.IntegerField(null=True)
+    experience = models.IntegerField(null=True)
+
+    def __str__(self) -> str:
+        return self.user.username

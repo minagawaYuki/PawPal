@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import CustomUser
+from .models import CustomUser, Caretaker
 from django.contrib.auth import logout
 from .forms import RegisterForm
 
@@ -14,7 +14,15 @@ def register(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             user_type = form.cleaned_data['user_type']
-            CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name, user_type=user_type)
+
+            user = CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name, user_type=user_type)
+            user.save()
+            
+            if user_type == 'caretaker':
+                caretaker = Caretaker(user=user)
+                caretaker.save()
+                
+
             return redirect('dashboard')
         else:
             print(form.errors)
@@ -22,3 +30,6 @@ def register(request):
         logout(request)
         form = RegisterForm()
     return render(request, 'register/register.html', {'form': form})
+
+def caregiver_dashboard(request):
+    return render(request, 'register/caregiver_dashboard.html')
