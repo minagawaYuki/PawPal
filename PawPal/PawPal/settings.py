@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'register',
     'login',
     'admindashboard',
+    'service_listings',
 ]
 
 MIDDLEWARE = [

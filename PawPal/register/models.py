@@ -57,3 +57,21 @@ class Caretaker(models.Model):
 
     def __str__(self) -> str:
         return self.user.username
+    
+class Owner(models.Model):
+    user = models.OneToOneField('CustomUser', on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return self.user.username
+    
+class Booking(models.Model):
+    pet_owner = models.ForeignKey('Owner', on_delete=models.CASCADE)
+    caretaker = models.ForeignKey('Caretaker', on_delete=models.CASCADE)
+    service_type = models.CharField(max_length=50)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+    status = models.CharField(max_length=50)
+    total_price = models.IntegerField()
+
+    def __str__(self) -> str:
+        return self.pet_owner.username
