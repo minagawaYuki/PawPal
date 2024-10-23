@@ -126,41 +126,37 @@
   
     <header class="bg-white shadow">
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900">Bookings</h1>
       </div>
     </header>
     <main>
-      <div class="mx-auto flex flex-col items-center border-2 mt-5 max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <h1>Create Listing</h1>
-        <input class="hidden" type="text" id="first_name" value="{{ user.first_name }}">
-        <form method="post" class="w-full flex flex-col gap-y-3 p-5 border-2" id="form">
-            {% csrf_token %}
-            <div>
-                <label class="block" for="description">Description</label>
-                {% render_field form.description class+="border-2 border-button rounded-md w-1/3 h-8 px-2" id+="description" %}
+        <div class="container mx-auto px-4 py-8">
+            
+            <!-- Booking List -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for booking in bookings %}
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <!-- Booking Info -->
+                    <p class="text-gray-600"><strong>Pet Sitter:</strong> {{ booking.user_id.first_name }} {{ booking.user_id.last_name }}</p>
+                    <p class="text-gray-600"><strong>Pet Sitter:</strong> {{ booking.description }}</p>
+                    <p class="text-gray-600"><strong>Service:</strong> {{ booking.service_type }}</p>
+                    <p class="text-gray-600"><strong>Price per hour:</strong> ${{ booking.price_per_hour }}</p>
+                    <p class="text-gray-600"><strong>Location:</strong> {{ booking.location }}</p>
+        
+                    <!-- Booking Status -->
+                    
+        
+                    <!-- Actions (optional, e.g., cancel or view more details) -->
+                    
+                </div>
+                {% endfor %}
             </div>
-            <div>
-                <label class="block" for="service_type">Service type</label>
-                {% render_field form.service_type class+="border-2 border-button rounded-md w-1/3 h-8 px-2" id+="service_type" %}
-            </div>
-            <div>
-                <label class="block" for="price_per_hour">Price per hour</label>
-                {% render_field form.price_per_hour class+="border-2 border-button rounded-md w-1/3 h-8 px-2" id+="price_per_hour" %}
-            </div>
-            <div>
-                <label class="block" for="location">Location</label>
-                {% render_field form.location class+="border-2 border-button rounded-md w-1/3 h-8 px-2" id+="location" %}
-            </div>
-            <div>
-                <label class="block" for="pet_types">Pet types</label>
-                {% render_field form.pet_types class+="border-2 border-button rounded-md w-1/3 h-8 px-2" id+="pet_types" %}
-            </div>
-            <button class="text-left w-fit px-4 py-2 rounded-full hover:bg-finished_text_background mt-3 bg-finished_background" type="submit" id="btnSubmit">Submit</button>
-        </form>
-      </div>
+        
+            <!-- Pagination (if applicable) -->
+            
+        </div>
+        
     </main>
   </div>
-  
-    <script type="module" src="{% static 'js/service_listings.js' %}"></script>
 </body>
 </html>

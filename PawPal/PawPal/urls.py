@@ -28,4 +28,5 @@ urlpatterns = [
     path('transactions/', include('transactions.urls')),
     path('admindashboard', include('admindashboard.urls')),
     path('service_listings/', include('service_listings.urls')),
+    path('listings/', include('listings.urls')),
 ]

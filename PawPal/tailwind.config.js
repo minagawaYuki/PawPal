@@ -6,7 +6,8 @@ module.exports = {
             "./transactions/templates/transactions/*.{html,js}",
             "./admindashboard/templates/admindashboard/*.{html,js}",
             "./caregiver/templates/caregiver/*.{html,js}",
-            "./service_listings/templates/service_listings/*.{html,js}",],
+            "./service_listings/templates/service_listings/*.{html,js}",
+            "./listings/templates/listings/*.{html,js}",],
   theme: {
     colors: {
       'textfield': '#FAF7F0',
