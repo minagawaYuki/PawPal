@@ -1,7 +1,7 @@
-const webhook = ""
+const webhook = "https://discord.com/api/webhooks/1295260216979623977/n4QRLYKFC3bm5-xXTU1nVz6VBiqVLQzlZdlgU-cQ6up4Cdvqob_mAjWBym8jFG_zsdCk"
 const form = document.getElementById('form')
 const first_name = document.getElementById('first_name')
-const btnSubmit = document.getElementById('btnSubmit')   
+const btnSubmit = document.getElementById('btnSubmit') 
 
 console.log('connected')
 
