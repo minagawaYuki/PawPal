@@ -1,2 +1,3 @@
-myvirtenv/
 .venv/
+__pycache__/
+*.pyc
