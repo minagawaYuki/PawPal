@@ -1,3 +1,5 @@
 .venv/
 __pycache__/
 *.pyc
+PawPal/db.sqlite3
+"Charles' Assigned Features/db.sqlite3"
