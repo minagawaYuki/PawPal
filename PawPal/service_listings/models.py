@@ -10,6 +10,7 @@ class ServiceListing(models.Model):
     price_per_hour = models.IntegerField()
     location = models.CharField(max_length=40)
     pet_types = models.CharField(max_length=40)
+    comment = models.CharField(max_length=40)
 
     def __str__(self) -> str:
         return self.user_id.username
