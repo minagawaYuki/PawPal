@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawPal - Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'servlist/css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">Logo</div>
+            <nav class="nav-menu">
+                <a href="../dashboard" class="nav-item">
+                    <img src="{% static 'servlist/images/paw-icon.svg' %}" alt="Dashboard icon">
+                    Dashboard
+                </a>
+                <a href="../book" class="nav-item">
+                    <img src="{% static 'servlist/images/calendar-icon.svg' %}" alt="Schedule icon">
+                    Book a Schedule
+                </a>
+                <a href="../../transactions" class="nav-item">
+                    <img src="{% static 'servlist/images/history-icon.svg' %}" alt="History icon">
+                    Transaction History
+                </a>
+            </nav>
+            <a href="#" class="logout">Log Out</a>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="notification-bar">
+                    <div class="notification-text">Your booking for Shiro has been accepted</div>
+                </div>
+                <div class="user-menu">
+                    <button class="notification-btn">
+                        <img src="{% static 'servlist/images/notify-icon.svg' %}" alt="Notifications" class="icon">
+                    </button>
+                    <button class="settings-btn">
+                        <img src="{% static 'servlist/images/settings-icon.svg' %}" alt="Settings" class="icon">
+                    </button>
+                    <div class="user-profile">
+                        <a href="../../transactions">
+                            <img src="{% static 'servlist/images/profile.jpg' %}" alt="Profile" class="profile-img">
+                        </a>
+                        <span id="profname"> {{ first_name }}</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Sections -->
+            <section class="content">
+                <div class="recent-bookings">
+                    <h2>Recent Bookings</h2>
+                    <div class="booking-item">
+                        <span>Dog Walking</span>
+                        <button class="book-again">Book Again</button>
+                    </div>
+                    <div class="booking-item">
+                        <span>Overnight</span>
+                        <button class="book-again">Book Again</button>
+                    </div>
+                    <div class="booking-item">
+                        <span>Dog Walking</span>
+                        <button class="book-again">Book Again</button>
+                    </div>
+                </div>
+
+                <div class="pet-info">
+                    <h2>Pet Information</h2>
+                    <div class="pet-details">
+                        <div class="info-row">
+                            <span>Name: </span>
+                        </div>
+                        <div class="info-row">
+                            <span>Type: </span>
+                        </div>
+                        <div class="info-row">
+                            <span>Breed: </span>
+                        </div>
+                        <div class="info-row">
+                            <span>Age: </span>
+                        </div>
+                        <div class="button-group">
+                            <button class="add-pet">Add Another Pet</button>
+                            <button class="schedule">Book a Schedule</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="current-bookings">
+                    <h2>Current Bookings</h2>
+                    <div class="no-bookings">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Service Type</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for booking in bookings %}
+                                    <tr>
+                                        <td>{{ booking.service.services }}</td>
+                                        <td>{{ booking.date }}</td>
+                                        <td>{{ booking.time }}</td>
+                                        <td>Pending</td>  <!-- Default status -->
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="4">No bookings available.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

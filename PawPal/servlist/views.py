@@ -8,10 +8,11 @@ def dashboard_view(request):
     # Fetch all bookings
     first_name = request.user.first_name
     bookings = Booking.objects.filter(user_id=request.user.id).select_related('pet', 'service')  # Use select_related to fetch related data efficiently
-    return render(request, 'servlist/dashboard.html', {'bookings': bookings, 'first_name': first_name})
+    return render(request, 'servlist/index.html', {'bookings': bookings, 'first_name': first_name})
 
 @login_required
 def book_schedule(request):
+    first_name = request.user.first_name
     if request.method == "POST":
         # Retrieve form data
         pet_name = request.POST.get('pet_name')
@@ -38,4 +39,4 @@ def book_schedule(request):
 
     # If GET request, return the booking form with available services
     services = Service.objects.all()  # Fetch available services from the database
-    return render(request, 'servlist/book.html', {'services': services})
+    return render(request, 'servlist/booking.html', {'services': services, 'first_name': first_name})
