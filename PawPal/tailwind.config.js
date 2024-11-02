@@ -18,7 +18,12 @@ module.exports = {
       'pending_text_color': '#A68603',
       'finished_text_background': '#3E9B05',
     },
-    extend: {},
+    extend: {
+      backgroundColor: {
+        'button-hover': '#6D6C6A', 
+        'pending-hover': '#E4D28F',
+      },
+    },
   },
   plugins: [],
 }

@@ -37,8 +37,13 @@
                     <td class="text-center">{{ booking.time }}</td>
                     <td class="text-center">{{ booking.pet.pet_name }}</td>
                     <td class="text-center">{{ booking.pet.pet_type }}</td>
-                    <td class="text-center font-semibold text-pending_text_color bg-pending_background rounded-full">Pending</td>
-
+                    <td class="text-center font-semibold text-cancel_text_color bg-cancel_background rounded-full hover:bg-red">
+                        {% if booking.status == 'pending' %}
+                            <a href="{% url 'cancel_booking' booking.id %}">
+                                <button type="button">Cancel</button>
+                            </a>
+                        {% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
                 
