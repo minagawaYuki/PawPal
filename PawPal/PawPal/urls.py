@@ -23,8 +23,7 @@ urlpatterns = [
     path('about/', views.about),
     path('userprofile/', include('userprofile.urls')),
     path('servlist/', include('servlist.urls')),
-    path('register/', include('register.urls')),
-    path('login/', include('login.urls')),
+    path('entry/', include('entry.urls')),
     path('transactions/', include('transactions.urls')),
     path('admindashboard', include('admindashboard.urls')),
 ]
