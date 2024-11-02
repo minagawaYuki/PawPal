@@ -15,11 +15,11 @@
             <div class="text-2xl mb-12">Logo</div>
             
             <nav class="flex-1">
-                <a href="#" class="flex items-center mb-4 p-3 rounded-lg bg-blue-500 text-white">
+                <a href="{% url 'admin_dashboard' %}" class="flex items-center mb-4 p-3 rounded-lg bg-blue-500 text-white">
                     <i class="fas fa-paw mr-3"></i>
                     Dashboard
                 </a>
-                <a href="#" class="flex items-center mb-4 p-3 rounded-lg text-gray-400 hover:text-white hover:bg-slate-700 transition-colors">
+                <a href="{% url 'admin_dashboard' %}" class="flex items-center mb-4 p-3 rounded-lg text-gray-400 hover:text-white hover:bg-slate-700 transition-colors">
                     <i class="fas fa-calendar mr-3"></i>
                     Bookings
                 </a>
@@ -27,7 +27,7 @@
                     <i class="fas fa-calendar mr-3"></i>
                     Ongoing Bookings
                 </a>
-                <a href="{% url 'finished_bookings' %}" class="flex items-center mb-4 p-3 rounded-lg text-gray-400 hover:text-white hover:bg-slate-700 transition-colors">
+                <a href="#" class="flex items-center mb-4 p-3 rounded-lg text-gray-400 hover:text-white hover:bg-slate-700 transition-colors">
                     <i class="fas fa-calendar mr-3"></i>
                     Finished Bookings
                 </a>
@@ -73,13 +73,13 @@
                             <th class="pb-4">Pet Type</th>
                             <th class="pb-4">Schedule</th>
                             <th class="pb-4">Time</th>
-                            <th class="pb-4">Status</th>
+                            <th class="pb-4">Date Finished</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for booking in bookings %}
                         <tr class="text-gray-200">
-                            <td class="py-4">
+                            <td class="py-4 pr-5">
                                 <div class="flex items-center">
                                     <div class="w-8 h-8 bg-slate-600 rounded-full mr-3"></div>
                                     {{ booking.user.first_name }} {{ booking.user.last_name}}
@@ -89,17 +89,6 @@
                             <td class="py-4">{{ booking.pet.pet_type }}</td>
                             <td class="py-4">{{ booking.date }}</td>
                             <td class="py-4">{{ booking.time }}</td>
-                            <td class="py-4">
-                                <form class="flex space-x-2">
-                                    {% csrf_token %}
-                                    <button class="accept-button w-8 h-8 flex items-center justify-center bg-green-500 rounded-[20px] text-white hover:bg-green-600 transition-colors" data-booking-id="{{ booking.id }}" type="submit">
-                                        <i class="fas fa-check text-xs"></i>
-                                    </button>
-                                    <button class="delete-button w-8 h-8 flex items-center justify-center bg-slate-600 rounded-[20px] text-white hover:bg-slate-700 transition-colors" data-booking-id="{{ booking.id }}" type="submit">
-                                        <i class="fas fa-times text-xs"></i>
-                                    </button>
-                                </form>
-                            </td>
                         </tr>
                         {% endfor %}
                         <button id="btnCheck">Button</button>
