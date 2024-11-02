@@ -22,11 +22,18 @@ class Service(models.Model):
         return self.services
 
 class Booking(models.Model):
+    STATUS_CHOICES = [
+        ('Pending', 'Pending'),
+        ('Finished', 'Finished'),
+        ('Cancelled', 'Cancelled'),
+    ]
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # Link to the logged-in user
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     date = models.DateField()
     time = models.TimeField()
+    comment = models.TextField(blank=True, null=True) # PRAS COMMENT
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pending') # PRAS NOTIFICATION
     
     def __str__(self):
         return f'Booking for Pet {self.pet.pet_name} - {self.service.services} on {self.date} at {self.time}'

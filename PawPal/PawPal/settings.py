@@ -42,8 +42,7 @@ INSTALLED_APPS = [
     'transactions',
     'widget_tweaks',
     'servlist',
-    'register',
-    'login',
+    'entry',
     'admindashboard',
 ]
 
