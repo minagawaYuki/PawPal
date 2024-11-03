@@ -7,6 +7,17 @@
     {% load static %}
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        #notificationBar {
+            min-height: 100px;
+            max-height: 400px;
+            overflow-y: auto; 
+            display: none; 
+        }
+        #notificationBar.hidden {
+            display: block;
+        }
+    </style>
 </head>
 <body class="bg-slate-800 text-white min-h-screen">
     <div class="flex min-h-screen">
@@ -46,9 +57,12 @@
                 <h1 class="text-2xl font-semibold">Dashboard</h1>
                 
                 <div class="flex items-center space-x-4">
-                    <button class="text-gray-400 hover:text-white transition-colors p-2">
-                        <i class="fas fa-bell text-xl"></i>
-                    </button>
+                    <div class="relative">
+                        <button id="notificationBell" class="text-gray-400 hover:text-white transition-colors p-2">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span id="redDot" class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                        </button>
+                    </div>
                     <button class="text-gray-400 hover:text-white transition-colors p-2">
                         <i class="fas fa-cog text-xl"></i>
                     </button>
@@ -58,6 +72,31 @@
                     </div>
                 </div>
             </header>
+
+            <div class="relative">
+                <button id="notificationBell" class="text-gray-400 hover:text-white transition-colors p-2">
+                    <i class="fas fa-bell text-xl"></i>
+                    <span id="redDot" class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+            
+                <!-- Notification Dropdown -->
+                <div id="notificationBar" class="absolute right-0 top-12 bg-white text-slate-800 p-4 w-80 rounded-lg shadow-lg hidden z-50">
+                    <h2 class="text-lg font-semibold mb-2">Notifications</h2>
+                    <div id="notificationsList">
+                        {% if bookings|length == 0 %}
+                            <p class="text-gray-500 text-center">No notifications yet.</p>
+                        {% else %}
+                            {% for booking in bookings %}
+                                <div class="border-b border-gray-300 py-2">
+                                    <p><strong>Service:</strong> {{ booking.service.services }}</p>
+                                    <p><strong>Status:</strong> {{ booking.book_status|title }}</p>
+                                    <p><strong>Date:</strong> {{ booking.date }} <strong>Time:</strong> {{ booking.time }}</p>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
 
             <!-- Dashboard Content -->
             <div class="p-6">
@@ -136,46 +175,37 @@
                     <textarea id="messageContent" name="content" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
                 </div>
                 <div class="flex justify-end space-x-2">
-                    <button type="button" id="cancelMessageBtn" class="px-4 py-2 bg-gray-200 text-slate-800 font-semibold rounded hover:bg-gray-300 transition-colors">
-                        Cancel
-                    </button>
-                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 transition-colors">
-                        Send Message
-                    </button>
+                    <button type="button" id="cancelMessageBtn" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Send</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const messageModal = document.getElementById('messageModal');
-        const messageUsBtn = document.getElementById('messageUsBtn');
-        const cancelMessageBtn = document.getElementById('cancelMessageBtn');
-        const messageForm = document.getElementById('messageForm');
+        document.addEventListener('DOMContentLoaded', () => {
+            const messageModal = document.getElementById('messageModal');
+            const messageUsBtn = document.getElementById('messageUsBtn');
+            const cancelMessageBtn = document.getElementById('cancelMessageBtn');
+            const notificationBell = document.getElementById('notificationBell');
+            const notificationBar = document.getElementById('notificationBar');
+            const redDot = document.getElementById('redDot');
 
-        messageUsBtn.addEventListener('click', function() {
-            messageModal.classList.remove('hidden');
-        });
+            // Show message modal when button is clicked
+            messageUsBtn.addEventListener('click', () => {
+                messageModal.classList.remove('hidden');
+            });
 
-        cancelMessageBtn.addEventListener('click', function() {
-            messageModal.classList.add('hidden');
-        });
-
-        messageForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Here you would typically send the message to your backend
-            alert('Message sent successfully!');
-            messageModal.classList.add('hidden');
-            messageForm.reset();
-        });
-
-        window.addEventListener('click', function(event) {
-            if (event.target === messageModal) {
+            // Hide message modal when cancel button is clicked
+            cancelMessageBtn.addEventListener('click', () => {
                 messageModal.classList.add('hidden');
-            }
+            });
+
+            notificationBell.addEventListener('click', () => {
+                notificationBar.classList.toggle('hidden');
+                redDot.classList.add('hidden');
+            });
         });
-    });
     </script>
 </body>
 </html>
