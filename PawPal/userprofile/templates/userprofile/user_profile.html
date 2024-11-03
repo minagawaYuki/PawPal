@@ -1,49 +1,119 @@
 {% load widget_tweaks %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
-    <link rel="stylesheet" href="../../../static/css/output.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
-    <nav>
-        <ul class="flex text-lg w-full justify-center font-semibold items-center bg-background gap-x-12">
-            <li class="my-4"><a href="../../servlist/dashboard">Dashboard</a></li>
-            <li><a href="../userprofile">View Profile</a></li>
-            <li><a href="../../servlist/book">Book a Schedule</a></li>
-            <li><a href="../../transactions">Transaction History</a></li>
-        </ul>
-    </nav>
-    <div class="container bg-background">
-        <div class="user-field flex w-full p-16 justify-center">
-            <form class="inputfields w-fit flex flex-col items-center bg-container px-32 py-16 gap-y-4 rounded-lg" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="user_id" value="{{ user.id }}">
-                <div class="firstname-field flex flex-col">
-                    <label class="w-fit text-sm" for="firstname">First Name</label>
-                    {% render_field form.first_name placeholder="First Name" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
+<body class="bg-slate-800 text-white min-h-screen">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-slate-800 p-6 flex flex-col border-r border-slate-700">
+            <div class="text-2xl mb-12">Logo</div>
+            
+            <nav class="flex-1">
+                <a href="../../servlist/dashboard" class="flex items-center mb-4 p-3 rounded-lg text-gray-400 hover:text-white hover:bg-slate-700 transition-colors">
+                    <i class="fas fa-tachometer-alt mr-3"></i>
+                    Dashboard
+                </a>
+                <a href="../userprofile" class="flex items-center mb-4 p-3 rounded-lg bg-blue-500 text-white">
+                    <i class="fas fa-user mr-3"></i>
+                    View Profile
+                </a>
+                <a href="../../servlist/book" class="flex items-center mb-4 p-3 rounded-lg text-gray-400 hover:text-white hover:bg-slate-700 transition-colors">
+                    <i class="fas fa-calendar-plus mr-3"></i>
+                    Book a Schedule
+                </a>
+                <a href="../../transactions" class="flex items-center mb-4 p-3 rounded-lg text-gray-400 hover:text-white hover:bg-slate-700 transition-colors">
+                    <i class="fas fa-history mr-3"></i>
+                    Transaction History
+                </a>
+            </nav>
+
+            <button class="flex items-center text-gray-400 hover:text-white transition-colors p-3">
+                <i class="fas fa-sign-out-alt mr-3"></i>
+                Log Out
+            </button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1">
+            <!-- Header -->
+            <header class="flex justify-between items-center p-6 bg-slate-800 border-b border-slate-700">
+                <h1 class="text-2xl font-semibold">User Profile</h1>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-400 hover:text-white transition-colors p-2">
+                        <i class="fas fa-bell text-xl"></i>
+                    </button>
+                    <button class="text-gray-400 hover:text-white transition-colors p-2">
+                        <i class="fas fa-cog text-xl"></i>
+                    </button>
+                    <div class="flex items-center">
+                        <img src="{% static 'images/anime1.png' %}" alt="Profile" class="w-10 h-10 rounded-full mr-3">
+                        <span>{{ user.first_name }} {{ user.last_name }}</span>
+                    </div>
                 </div>
-                <div class="firstname-field flex flex-col">
-                    <label class="w-fit text-sm" for="firstname">Last Name</label>
-                    {% render_field form.last_name placeholder="Last Name" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
-                </div>
-                <div class="firstname-field flex flex-col">
-                    <label class="w-fit text-sm" for="firstname">Username</label>
-                    {% render_field form.username placeholder="Username" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
-                </div>
-                <div class="firstname-field flex flex-col">
-                    <label class="w-fit text-sm" for="firstname">Email</label>
-                    {% render_field form.email placeholder="Email" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
-                </div>
-                <div class="firstname-field flex flex-col">
-                    <label class="w-fit text-sm" for="firstname">Password</label>
-                    {% render_field form.password placeholder="Password" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
-                </div>
-                <button class="w-fit text-white bg-button px-6 py-2 hover:cursor-pointer hover:bg-black rounded-full" type="submit">Save</button>
-            </form>
+            </header>
+
+            <!-- User Profile Form -->
+            <div class="p-6">
+                <form id="profileForm" method="post" class="bg-slate-700 rounded-lg p-6 max-w-md mx-auto">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-300 mb-2" for="{{ form.first_name.id_for_label }}">First Name</label>
+                        {% render_field form.first_name placeholder="First Name" class="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-300 mb-2" for="{{ form.last_name.id_for_label }}">Last Name</label>
+                        {% render_field form.last_name placeholder="Last Name" class="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-300 mb-2" for="{{ form.username.id_for_label }}">Username</label>
+                        {% render_field form.username placeholder="Username" class="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-300 mb-2" for="{{ form.email.id_for_label }}">Email</label>
+                        {% render_field form.email placeholder="Email" class="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" %}
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-300 mb-2" for="{{ form.password.id_for_label }}">Password</label>
+                        {% render_field form.password placeholder="Password" class="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" %}
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-700">
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div id="updateModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-lg p-6 max-w-sm w-full">
+            <h2 id="modalTitle" class="text-xl font-bold text-slate-800 mb-4"></h2>
+            <p id="modalMessage" class="text-gray-600 mb-6"></p>
+            <div class="flex justify-end">
+                <button id="modalCloseButton" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 transition-colors">
+                    Close
+                </button>
+            </div>
         </div>
     </div>
+
+    <script src="{% static 'js/userprofile.js' %}"></script>
 </body>
 </html>

@@ -27,6 +27,7 @@ class Booking(models.Model):
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     date = models.DateField()
     time = models.TimeField()
+    status = models.CharField(max_length=50)
     status = models.CharField(max_length=20, default='pending')
     
     def __str__(self):

@@ -1,5 +1,5 @@
 """
-URL configuration for Pawpal project.
+URL configuration for Basilisco project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -16,15 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from . import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.homepage),
-    path('about/', views.about),
-    path('userprofile/', include('userprofile.urls')),
-    path('servlist/', include('servlist.urls')),
-    path('register/', include('register.urls')),
-    path('login/', include('login.urls')),
-    path('transactions/', include('transactions.urls')),
-    path('admindashboard/', include('admindashboard.urls')),
+    path("registration/", include("registration.urls")),
+    path("home_page/", include("home_page.urls"))
 ]

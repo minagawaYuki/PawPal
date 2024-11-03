@@ -17,6 +17,12 @@ module.exports = {
       'finished_background': '#B8EF96',
       'pending_text_color': '#A68603',
       'finished_text_background': '#3E9B05',
+      primary: '#334155', // slate-700
+                        'primary-hover': '#475569', // slate-600
+                        accent: '#22c55e', // green-500
+                        'accent-hover': '#16a34a', // green-600
+                        danger: '#ef4444', // red-500
+                        'danger-hover': '#dc2626', // red-600
     },
     extend: {
       backgroundColor: {
