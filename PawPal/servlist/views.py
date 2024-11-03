@@ -8,7 +8,7 @@ from django.http import HttpResponse
 def dashboard_view(request):
     # Fetch all bookings
     first_name = request.user.first_name
-    bookings = Booking.objects.filter(user_id=request.user.id).exclude(book_status='canceled').select_related('pet', 'service')  # Use select_related to fetch related data efficiently
+    bookings = Booking.objects.filter(user_id=request.user.id, status='pending').select_related('pet', 'service')  # Use select_related to fetch related data efficiently
 
     return render(request, 'servlist/index.html', {'bookings': bookings, 'first_name': first_name})
 
