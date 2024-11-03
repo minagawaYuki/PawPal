@@ -5,123 +5,155 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PawPal - Dashboard</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'servlist/css/styles.css' %}">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container">
+<body class="bg-gray-100 font-sans">
+    <div class="flex h-screen">
         <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="logo">Logo</div>
-            <nav class="nav-menu">
-                <a href="../dashboard" class="nav-item">
-                    <img src="{% static 'servlist/images/paw-icon.svg' %}" alt="Dashboard icon">
-                    Dashboards
+        <aside class="w-64 bg-white shadow-md">
+            <div class="p-4">
+                <h1 class="text-2xl font-bold text-blue-600">PawPal</h1>
+            </div>
+            <nav class="mt-8">
+                <a href="../dashboard" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100">
+                    <img src="{% static 'servlist/images/paw-icon.svg' %}" alt="" class="w-5 h-5 mr-3">
+                    Dashboard
                 </a>
-                <a href="../book" class="nav-item">
-                    <img src="{% static 'servlist/images/calendar-icon.svg' %}" alt="Schedule icon">
+                <a href="../book" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100">
+                    <img src="{% static 'servlist/images/calendar-icon.svg' %}" alt="" class="w-5 h-5 mr-3">
                     Book a Schedule
                 </a>
-                <a href="../../transactions" class="nav-item">
-                    <img src="{% static 'servlist/images/history-icon.svg' %}" alt="History icon">
+                <a href="../../transactions" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100">
+                    <img src="{% static 'servlist/images/history-icon.svg' %}" alt="" class="w-5 h-5 mr-3">
                     Transaction History
                 </a>
             </nav>
-            <a href="#" class="logout">Log Out</a>
+            <div class="mt-auto p-4">
+                <a href="#" class="flex items-center text-gray-700 hover:text-blue-600">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                    </svg>
+                    Log Out
+                </a>
+            </div>
         </aside>
 
         <!-- Main Content -->
-        <main class="main-content">
+        <main class="flex-1 overflow-y-auto">
             <!-- Header -->
-            <header class="header">
-                <div class="notification-bar">
-                    <div class="notification-text">Your booking for Shiro has been accepted</div>
-                </div>
-                <div class="user-menu">
-                    <button class="notification-btn">
-                        <img src="{% static 'servlist/images/notify-icon.svg' %}" alt="Notifications" class="icon">
-                    </button>
-                    <button class="settings-btn">
-                        <img src="{% static 'servlist/images/settings-icon.svg' %}" alt="Settings" class="icon">
-                    </button>
-                    <div class="user-profile">
-                        <a href="../../userprofile">
-                            <img src="{% static 'servlist/images/profile.jpg' %}" alt="Profile" class="profile-img">
-                        </a>
-                        <span id="profname"> {{ first_name }}</span>
+            <header class="bg-white shadow">
+                <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between items-center">
+                        <div class="bg-yellow-100 px-4 py-2 rounded-md">
+                            <p class="text-yellow-800">Your booking for Shiro has been accepted</p>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <button class="text-gray-500 hover:text-gray-700">
+                                <img src="{% static 'servlist/images/notify-icon.svg' %}" alt="Notifications" class="w-6 h-6">
+                            </button>
+                            <button class="text-gray-500 hover:text-gray-700">
+                                <img src="{% static 'servlist/images/settings-icon.svg' %}" alt="Settings" class="w-6 h-6">
+                            </button>
+                            <a href="../../userprofile" class="flex items-center">
+                                <img src="{% static 'servlist/images/profile.jpg' %}" alt="Profile" class="w-8 h-8 rounded-full mr-2">
+                                <span id="profname" class="text-gray-700">{{ first_name }}</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </header>
 
             <!-- Content Sections -->
-            <section class="content">
-                <div class="recent-bookings">
-                    <h2>Recent Bookings</h2>
-                    <div class="booking-item">
-                        <span>Dog Walking</span>
-                        <button class="book-again">Book Again</button>
+            <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Recent Bookings -->
+                    <div class="bg-white overflow-hidden shadow rounded-lg">
+                        <div class="px-4 py-5 sm:p-6">
+                            <h2 class="text-lg font-medium text-gray-900 mb-4">Recent Bookings</h2>
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-700">Dog Walking</span>
+                                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">Book Again</button>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-700">Overnight</span>
+                                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">Book Again</button>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-700">Dog Walking</span>
+                                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">Book Again</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="booking-item">
-                        <span>Overnight</span>
-                        <button class="book-again">Book Again</button>
-                    </div>
-                    <div class="booking-item">
-                        <span>Dog Walking</span>
-                        <button class="book-again">Book Again</button>
-                    </div>
-                </div>
 
-                <div class="pet-info">
-                    <h2>Pet Information</h2>
-                    <div class="pet-details">
-                        <div class="info-row">
-                            <span>Name: </span>
-                        </div>
-                        <div class="info-row">
-                            <span>Type: </span>
-                        </div>
-                        <div class="info-row">
-                            <span>Breed: </span>
-                        </div>
-                        <div class="info-row">
-                            <span>Age: </span>
-                        </div>
-                        <div class="button-group">
-                            <button class="add-pet">Add Another Pet</button>
-                            <button class="schedule">Book a Schedule</button>
+                    <!-- Pet Information -->
+                    <div class="bg-white overflow-hidden shadow rounded-lg">
+                        <div class="px-4 py-5 sm:p-6">
+                            <h2 class="text-lg font-medium text-gray-900 mb-4">Pet Information</h2>
+                            <div class="space-y-2">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Name:</span>
+                                    <span class="text-gray-900">Max</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Type:</span>
+                                    <span class="text-gray-900">Dog</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Breed:</span>
+                                    <span class="text-gray-900">Labrador</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Age:</span>
+                                    <span class="text-gray-900">3 years</span>
+                                </div>
+                            </div>
+                            <div class="mt-6 flex space-x-3">
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Add Another Pet</button>
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Book a Schedule</button>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="current-bookings">
-                    <h2>Current Bookings</h2>
-                    <div class="no-bookings">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Service Type</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for booking in bookings %}
-                                    <tr>
-                                        <td>{{ booking.service.services }}</td>
-                                        <td>{{ booking.date }}</td>
-                                        <td>{{ booking.time }}</td>
-                                        <td>Pending</td>  <!-- Default status -->
-                                    </tr>
-                                {% empty %}
-                                    <tr>
-                                        <td colspan="4">No bookings available.</td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                    <!-- Current Bookings -->
+                    <div class="bg-white overflow-hidden shadow rounded-lg col-span-full">
+                        <div class="px-4 py-5 sm:p-6">
+                            <h2 class="text-lg font-medium text-gray-900 mb-4">Current Bookings</h2>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service Type</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        {% for booking in bookings %}
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ booking.service.services }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ booking.date }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ booking.time }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                                        Pending
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        {% empty %}
+                                            <tr>
+                                                <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No bookings available.</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </section>
+            </div>
         </main>
     </div>
 </body>
