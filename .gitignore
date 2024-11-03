@@ -1,1 +1,8 @@
 myvirtenv/
+.venv/
+pycache/
+*.pyc
+PawPal/db.sqlite3
+"Charles' Assigned Features/pawpal/db.sqlite3"
+.vscode/
+node_modules/
