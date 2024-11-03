@@ -93,7 +93,8 @@ def delete_booking(request):
         booking_id = data.get("booking_id")
         try:
             booking = Booking.objects.get(id=booking_id)
-            booking.delete()
+            booking.status = 'canceled'
+            booking.save()
             return JsonResponse({"success": True})
         except Booking.DoesNotExist:
             return JsonResponse({"success": False, "error": "Booking not found"})

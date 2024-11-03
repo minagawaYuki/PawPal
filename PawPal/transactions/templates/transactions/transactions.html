@@ -55,7 +55,7 @@
                     </button>
                     <div class="flex items-center">
                         <img src="{% static 'images/anime1.png' %}" alt="Profile" class="w-10 h-10 rounded-full mr-3">
-                        <span>{{ first_name }}</span>
+                        <span>{{ first_name }} {{ last_name }}</span>
                     </div>
                 </div>
             </header>
@@ -85,12 +85,12 @@
                                 <td class="p-3">{{ booking.pet.pet_name }}</td>
                                 <td class="p-3">{{ booking.pet.pet_type }}</td>
                                 <td class="p-3">
-                                    {% if booking.book_status == 'pending' %}
+                                    {% if booking.status == 'pending' %}
                                         <button class="cancel-button bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" data-booking-id="{{ booking.id }}">
                                             Cancel
                                         </button>
                                     {% else %}
-                                        {{ booking.book_status|title }}
+                                        {{ booking.status|title }}
                                     {% endif %}
                                 </td>
                             </tr>
@@ -135,36 +135,41 @@
         });
 
         confirmButton.addEventListener('click', function() {
-            if (currentBookingId) {
-                fetch(`/transactions/cancel_booking/${currentBookingId}/`, {
-                    method: 'POST',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRFToken': getCookie('csrftoken')
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        const row = document.querySelector(`tr[data-booking-id="${currentBookingId}"]`);
-                        if (row) {
-                            row.remove();
-                        }
-                        modalMessage.textContent = data.message;
-                    } else {
-                        modalMessage.textContent = data.message || 'An error occurred while canceling the booking.';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    modalMessage.textContent = 'An unexpected error occurred. Please try again.';
-                })
-                .finally(() => {
-                    confirmButton.classList.add('hidden');
-                    cancelButton.textContent = 'Close';
-                });
+    if (currentBookingId) {
+        fetch(`/transactions/cancel_booking/${currentBookingId}/`, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': getCookie('csrftoken')
             }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                const row = document.querySelector(`tr[data-booking-id="${currentBookingId}"]`);
+                if (row) {
+                    row.remove();
+                }
+                modalMessage.textContent = data.message;
+            } else {
+                modalMessage.textContent = data.message || 'An error occurred while canceling the booking.';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            modalMessage.textContent = 'An unexpected error occurred. Please try again.';
+        })
+        .finally(() => {
+            confirmButton.classList.add('hidden');
+            cancelButton.textContent = 'Close';
         });
+    }
+});
 
         cancelButton.addEventListener('click', function() {
             modal.classList.add('hidden');

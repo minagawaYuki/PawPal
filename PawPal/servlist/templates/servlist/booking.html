@@ -1,126 +1,148 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PawPal - Book a Schedule</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'servlist/css/booking-styles.css' %}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // JavaScript to show pop-up confirmation using SweetAlert2
         function showConfirmationMessage(event) {
-            event.preventDefault(); // Prevent form from being submitted immediately
+            event.preventDefault();
 
-            // Get form field values
             const date = document.getElementById('date').value;
             const time = document.getElementById('time').value;
             const petType = document.getElementById('pet_type').value;
             const petName = document.getElementById('pet_name').value;
             const service = document.getElementById('service').value;
 
-            // Check if all fields are filled out
             if (date && time && petType && petName && service) {
-                // Display confirmation pop-up with SweetAlert2
                 Swal.fire({
                     title: 'Confirm Booking Details',
                     html: `<b>Date:</b> ${date}<br><b>Time:</b> ${time}<br><b>Pet:</b> ${petName} (${petType})<br><b>Service:</b> ${service}`,
                     icon: 'info',
                     showCancelButton: true,
                     confirmButtonText: 'Yes, Confirm',
-                    cancelButtonText: 'Cancel'
+                    cancelButtonText: 'Cancel',
+                    background: '#1e293b',
+                    color: '#ffffff'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire('Booking Confirmed!', '', 'success').then(() => {
-                            // Submit the form after showing confirmation
+                        Swal.fire({
+                            title: 'Booking Confirmed!',
+                            icon: 'success',
+                            background: '#1e293b',
+                            color: '#ffffff'
+                        }).then(() => {
                             document.querySelector('form').submit();
                         });
                     }
                 });
             } else {
-                Swal.fire("Please fill out all fields before confirming.", "", "warning");
+                Swal.fire({
+                    title: "Please fill out all fields before confirming.",
+                    icon: "warning",
+                    background: '#1e293b',
+                    color: '#ffffff'
+                });
             }
         }
     </script>
 </head>
-<body>
-    <div class="container">
+<body class="bg-slate-800 text-white min-h-screen">
+    <div class="flex min-h-screen">
         <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="logo">Logo</div>
-            <nav class="nav-menu">
-                <a href="../dashboard" class="nav-item">
-                    <img src="{% static 'servlist/images/paw-icon.svg' %}" alt="Dashboard icon">
+        <aside class="w-64 bg-slate-800 p-6 flex flex-col border-r border-slate-700">
+            <div class="text-2xl mb-12">PawPal</div>
+            
+            <nav class="flex-1">
+                <a href="../dashboard" class="flex items-center mb-4 p-3 rounded-lg text-gray-400 hover:text-white hover:bg-slate-700 transition-colors">
+                    <i class="fas fa-tachometer-alt mr-3"></i>
                     Dashboard
                 </a>
-                <a href="../book" class="nav-item">
-                    <img src="{% static 'servlist/images/calendar-icon.svg' %}" alt="Schedule icon">
+                <a href="../../userprofile" class="flex items-center mb-4 p-3 rounded-lg text-gray-400 hover:text-white hover:bg-slate-700 transition-colors">
+                    <i class="fas fa-user mr-3"></i>
+                    View Profile
+                </a>
+                <a href="../book" class="flex items-center mb-4 p-3 rounded-lg bg-blue-500 text-white">
+                    <i class="fas fa-calendar-plus mr-3"></i>
                     Book a Schedule
                 </a>
-                <a href="../../transactions" class="nav-item">
-                    <img src="{% static 'servlist/images/history-icon.svg' %}" alt="History icon">
+                <a href="../../transactions" class="flex items-center mb-4 p-3 rounded-lg text-gray-400 hover:text-white hover:bg-slate-700 transition-colors">
+                    <i class="fas fa-history mr-3"></i>
                     Transaction History
                 </a>
             </nav>
-            <a href="#" class="logout">Log Out</a>
+
+            <button class="flex items-center text-gray-400 hover:text-white transition-colors p-3">
+                <i class="fas fa-sign-out-alt mr-3"></i>
+                Log Out
+            </button>
         </aside>
 
         <!-- Main Content -->
-        <main class="main-content">
-            <header class="header">
-                <div class="user-menu">
-                    <button class="notification-btn">
-                        <img src="{% static 'servlist/images/notify-icon.svg' %}" alt="Notifications" class="icon">
+        <main class="flex-1">
+            <!-- Header -->
+            <header class="flex justify-between items-center p-6 bg-slate-800 border-b border-slate-700">
+                <h1 class="text-2xl font-semibold">Book a Schedule</h1>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-400 hover:text-white transition-colors p-2">
+                        <i class="fas fa-bell text-xl"></i>
                     </button>
-                    <button class="settings-btn">
-                        <img src="{% static 'servlist/images/settings-icon.svg' %}" alt="Settings" class="icon">
+                    <button class="text-gray-400 hover:text-white transition-colors p-2">
+                        <i class="fas fa-cog text-xl"></i>
                     </button>
-                    <div class="user-profile">
-                        <a href="../../userprofile">
-                            <img src="{% static 'servlist/images/profile.jpg' %}" alt="Profile" class="profile-img">
-                        </a>
-                        <span id="profname"> {{ first_name }}</span>
+                    <div class="flex items-center">
+                        <img src="{% static 'images/anime1.png' %}" alt="Profile" class="w-10 h-10 rounded-full mr-3">
+                        <span>{{ first_name }} {{ last_name }}</span>
                     </div>
                 </div>
             </header>
 
-            <div class="booking-container">
-                <form action="" method="POST" onsubmit="showConfirmationMessage(event)" class="booking-form">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="date">Select Date:</label>
-                        <input type="date" id="date" name="date" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="time">Select Time:</label>
-                        <input type="time" id="time" name="time" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="pet_type">Pet Type:</label> 
-                        <input type="text" id="pet_type" name="pet_type" placeholder="Ex. Shark" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="pet_name">Pet Name:</label>
-                        <input type="text" id="pet_name" name="pet_name" placeholder="Ex. Bella" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="service">Select Service:</label>
-                        <select id="service" name="service" required>
-                        {% for service in services %}
-                            <option value="{{ service.services }}">{{ service.services }}</option>
-                        {% endfor %}
-                    </select>
-                    </div>
-                    <button type="submit" class="confirm-btn">Confirm</button>
-                </form>
-
-                <div class="comment-section">
-                    <h2>Tell us more about your pet</h2>
-                    <textarea id="comment" name="comment" rows="8" placeholder="Add Comment"></textarea>
+            <!-- Booking Form -->
+            <div class="p-6">
+                <div class="bg-slate-700 rounded-lg p-6 max-w-2xl mx-auto">
+                    <form action="" method="POST" onsubmit="showConfirmationMessage(event)" class="space-y-6">
+                        {% csrf_token %}
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="date" class="block text-sm font-medium text-gray-300 mb-2">Select Date:</label>
+                                <input type="date" id="date" name="date" required class="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="time" class="block text-sm font-medium text-gray-300 mb-2">Select Time:</label>
+                                <input type="time" id="time" name="time" required class="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="pet_type" class="block text-sm font-medium text-gray-300 mb-2">Pet Type:</label>
+                                <input type="text" id="pet_type" name="pet_type" placeholder="Ex. Shark" required class="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="pet_name" class="block text-sm font-medium text-gray-300 mb-2">Pet Name:</label>
+                                <input type="text" id="pet_name" name="pet_name" placeholder="Ex. Bella" required class="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="service" class="block text-sm font-medium text-gray-300 mb-2">Select Service:</label>
+                            <select id="service" name="service" required class="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                {% for service in services %}
+                                    <option value="{{ service.services }}">{{ service.services }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div>
+                            <label for="comment" class="block text-sm font-medium text-gray-300 mb-2">Tell us more about your pet:</label>
+                            <textarea id="comment" name="comment" rows="4" placeholder="Add Comment" class="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="w-fit px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-700">
+                                Confirm Booking
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </main>
