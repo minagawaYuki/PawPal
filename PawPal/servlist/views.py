@@ -19,6 +19,7 @@ def book_schedule(request):
         service_name = request.POST.get('service')  # This matches the service dropdown
         date = request.POST.get('date')
         time = request.POST.get('time')
+        status = 'pending'
 
         # Handle pet: Check if pet already exists; if not, create it
         pet, created = Pet.objects.get_or_create(pet_name=pet_name, pet_type=pet_type)
@@ -30,7 +31,7 @@ def book_schedule(request):
             return HttpResponse(f"Service '{service_name}' does not exist in our system.")
 
         # Create a new booking
-        booking = Booking.objects.create(user=request.user, pet=pet, service=service, date=date, time=time)
+        booking = Booking.objects.create(user=request.user, pet=pet, service=service, date=date, time=time, status=status)
         booking.save()
 
         # Redirect to dashboard after successful booking
