@@ -1,0 +1,236 @@
+:root {
+    --primary-color: #244252;
+    /* --secondary-color: #435B66; */
+    --secondary-color: #FFFFFF;
+    --accent-color: #3A6A7D;
+    --text-light: #ffffff;
+    --text-dark: #244252;
+    --border-radius: 15px;
+    --border-color: #A5D7E8;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+}
+
+h2, span {
+    color: var(--text-dark);
+}
+
+#profname {
+    color: var(--text-light);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    background-color: var(--primary-color);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    border-right: 3px solid var(--border-color);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 1rem 0;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.nav-item, a{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 0.5rem;
+    text-decoration: none;
+    color: var(--text-light);
+    border-radius: var(--border-radius);
+    transition: background-color 0.3s;
+}
+
+.nav-item.active,
+.nav-item:hover {
+    background-color: var(--accent-color);
+}
+
+.logout {
+    margin-top: auto;
+    color: var(--text-light);
+    text-decoration: none;
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem 2rem;
+    background-color: var(--primary-color);
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.notification-btn,
+.settings-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s;
+}
+
+.notification-btn:hover,
+.settings-btn:hover {
+    opacity: 0.8;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-left: 3px solid;
+    padding-left: 20px;
+}
+
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Booking Form Styles */
+.booking-container {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-size: 1rem;
+    color: var(--text-light);
+}
+
+.form-group input,
+.form-group select {
+    padding: 0.75rem;
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: var(--border-color);
+    color: var(--text-dark);
+    font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: 2px solid var(--accent-color);
+}
+
+.comment-section {
+    background-color: var(--border-color);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    color: var(--text-dark);
+}
+
+.comment-section h2 {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    resize: none;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+textarea:focus {
+    outline: 2px solid var(--accent-color);
+    border-color: transparent;
+}
+
+.confirm-btn {
+    grid-column: span 2;
+    background-color: var(--border-color);
+    color: var(--text-dark);
+    border: none;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    width: fit-content;
+    margin: 0 auto;
+    min-width: 200px;
+}
+
+.confirm-btn:hover {
+    opacity: 0.9;
+}
+
+/* Form Control Styles */
+input[type="date"],
+input[type="time"],
+select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    padding-right: 2rem;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}

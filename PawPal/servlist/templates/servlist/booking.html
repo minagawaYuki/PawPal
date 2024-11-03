@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawPal - Book a Schedule</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'servlist/css/booking-styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // JavaScript to show pop-up confirmation using SweetAlert2
+        function showConfirmationMessage(event) {
+            event.preventDefault(); // Prevent form from being submitted immediately
+
+            // Get form field values
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const petType = document.getElementById('pet_type').value;
+            const petName = document.getElementById('pet_name').value;
+            const service = document.getElementById('service').value;
+
+            // Check if all fields are filled out
+            if (date && time && petType && petName && service) {
+                // Display confirmation pop-up with SweetAlert2
+                Swal.fire({
+                    title: 'Confirm Booking Details',
+                    html: `<b>Date:</b> ${date}<br><b>Time:</b> ${time}<br><b>Pet:</b> ${petName} (${petType})<br><b>Service:</b> ${service}`,
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, Confirm',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire('Booking Confirmed!', '', 'success').then(() => {
+                            // Submit the form after showing confirmation
+                            document.querySelector('form').submit();
+                        });
+                    }
+                });
+            } else {
+                Swal.fire("Please fill out all fields before confirming.", "", "warning");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">Logo</div>
+            <nav class="nav-menu">
+                <a href="../dashboard" class="nav-item">
+                    <img src="{% static 'servlist/images/paw-icon.svg' %}" alt="Dashboard icon">
+                    Dashboard
+                </a>
+                <a href="../book" class="nav-item">
+                    <img src="{% static 'servlist/images/calendar-icon.svg' %}" alt="Schedule icon">
+                    Book a Schedule
+                </a>
+                <a href="../../transactions" class="nav-item">
+                    <img src="{% static 'servlist/images/history-icon.svg' %}" alt="History icon">
+                    Transaction History
+                </a>
+            </nav>
+            <a href="#" class="logout">Log Out</a>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <div class="user-menu">
+                    <button class="notification-btn">
+                        <img src="{% static 'servlist/images/notify-icon.svg' %}" alt="Notifications" class="icon">
+                    </button>
+                    <button class="settings-btn">
+                        <img src="{% static 'servlist/images/settings-icon.svg' %}" alt="Settings" class="icon">
+                    </button>
+                    <div class="user-profile">
+                        <a href="../../userprofile">
+                            <img src="{% static 'servlist/images/profile.jpg' %}" alt="Profile" class="profile-img">
+                        </a>
+                        <span id="profname"> {{ first_name }}</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="booking-container">
+                <form action="" method="POST" onsubmit="showConfirmationMessage(event)" class="booking-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="date">Select Date:</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="time">Select Time:</label>
+                        <input type="time" id="time" name="time" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pet_type">Pet Type:</label> 
+                        <input type="text" id="pet_type" name="pet_type" placeholder="Ex. Shark" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pet_name">Pet Name:</label>
+                        <input type="text" id="pet_name" name="pet_name" placeholder="Ex. Bella" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="service">Select Service:</label>
+                        <select id="service" name="service" required>
+                        {% for service in services %}
+                            <option value="{{ service.services }}">{{ service.services }}</option>
+                        {% endfor %}
+                    </select>
+                    </div>
+                    <button type="submit" class="confirm-btn">Confirm</button>
+                </form>
+
+                <div class="comment-section">
+                    <h2>Tell us more about your pet</h2>
+                    <textarea id="comment" name="comment" rows="8" placeholder="Add Comment"></textarea>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -14,7 +14,7 @@
                 <li class="my-4"><a href="../../servlist/dashboard">Dashboard</a></li>
                 <li><a href="../userprofile">View Profile</a></li>
                 <li><a href="../../servlist/book">Book a Schedule</a></li>
-                <li><a href="../../servlist/dashboard">Transaction History</a></li>
+                <li><a href="../transactions">Transaction History</a></li>
             </ul>
         </nav>
         <div class="transaction-field flex flex-col w-10/12 h-full bg-container rounded-xl p-16">
@@ -37,8 +37,13 @@
                     <td class="text-center">{{ booking.time }}</td>
                     <td class="text-center">{{ booking.pet.pet_name }}</td>
                     <td class="text-center">{{ booking.pet.pet_type }}</td>
-                    <td class="text-center font-semibold text-pending_text_color bg-pending_background rounded-full">Pending</td>
-
+                    <td class="text-center font-semibold text-cancel_text_color bg-cancel_background rounded-full hover:bg-red">
+                        {% if booking.status == 'pending' %}
+                            <a href="{% url 'cancel_booking' booking.id %}">
+                                <button type="button">Cancel</button>
+                            </a>
+                        {% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
                 

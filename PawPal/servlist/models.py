@@ -28,6 +28,7 @@ class Booking(models.Model):
     date = models.DateField()
     time = models.TimeField()
     status = models.CharField(max_length=50)
+    status = models.CharField(max_length=20, default='pending')
     
     def __str__(self):
-        return f'Booking for Pet {self.pet.pet_name} - {self.service.services} on {self.date} at {self.time}'
+        return f'Booking for Pet {self.pet.pet_name} - {self.service.services} on {self.date} at {self.time} status {self.status}'

@@ -15,5 +15,6 @@ class Migration(migrations.Migration):
             name='status',
             field=models.CharField(default=1, max_length=50),
             preserve_default=False,
+            field=models.CharField(default='pending', max_length=20),
         ),
     ]

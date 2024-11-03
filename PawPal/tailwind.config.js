@@ -24,7 +24,12 @@ module.exports = {
                         danger: '#ef4444', // red-500
                         'danger-hover': '#dc2626', // red-600
     },
-    extend: {},
+    extend: {
+      backgroundColor: {
+        'button-hover': '#6D6C6A', 
+        'pending-hover': '#E4D28F',
+      },
+    },
   },
   plugins: [],
 }
