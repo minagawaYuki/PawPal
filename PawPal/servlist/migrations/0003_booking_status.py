@@ -15,6 +15,11 @@ class Migration(migrations.Migration):
             name='status',
             field=models.CharField(default=1, max_length=50),
             preserve_default=False,
+        ),
+        migrations.AddField(
+            model_name='booking',
+            name='book_status',
             field=models.CharField(default='pending', max_length=20),
+            preserve_default=False,
         ),
     ]
