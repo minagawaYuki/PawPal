@@ -1,128 +1,212 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PawPal - Dashboard</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'servlist/css/styles.css' %}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
-    <div class="container">
+<body class="bg-slate-800 text-white min-h-screen">
+    <div class="flex min-h-screen">
         <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="logo">Logo</div>
-            <nav class="nav-menu">
-                <a href="../dashboard" class="nav-item">
-                    <img src="{% static 'servlist/images/paw-icon.svg' %}" alt="Dashboard icon">
-                    Dashboards
+        <aside class="w-64 bg-slate-800 p-6 flex flex-col border-r border-slate-700">
+            <div class="text-2xl mb-12">PawPal</div>
+            
+            <nav class="flex-1">
+                <a href="../dashboard" class="flex items-center mb-4 p-3 rounded-lg bg-blue-500 text-white">
+                    <i class="fas fa-tachometer-alt mr-3"></i>
+                    Dashboard
                 </a>
-                <a href="../book" class="nav-item">
-                    <img src="{% static 'servlist/images/calendar-icon.svg' %}" alt="Schedule icon">
+                <a href="../../userprofile" class="flex items-center mb-4 p-3 rounded-lg text-gray-400 hover:text-white hover:bg-slate-700 transition-colors">
+                    <i class="fas fa-user mr-3"></i>
+                    View Profile
+                </a>
+                <a href="../book" class="flex items-center mb-4 p-3 rounded-lg text-gray-400 hover:text-white hover:bg-slate-700 transition-colors">
+                    <i class="fas fa-calendar-plus mr-3"></i>
                     Book a Schedule
                 </a>
-                <a href="../../transactions" class="nav-item">
-                    <img src="{% static 'servlist/images/history-icon.svg' %}" alt="History icon">
+                <a href="../../transactions" class="flex items-center mb-4 p-3 rounded-lg text-gray-400 hover:text-white hover:bg-slate-700 transition-colors">
+                    <i class="fas fa-history mr-3"></i>
                     Transaction History
                 </a>
             </nav>
-            <a href="#" class="logout">Log Out</a>
+
+            <button class="flex items-center text-gray-400 hover:text-white transition-colors p-3">
+                <i class="fas fa-sign-out-alt mr-3"></i>
+                Log Out
+            </button>
         </aside>
 
         <!-- Main Content -->
-        <main class="main-content">
+        <main class="flex-1">
             <!-- Header -->
-            <header class="header">
-                <div class="notification-bar">
-                    <div class="notification-text">Your booking for Shiro has been accepted</div>
-                </div>
-                <div class="user-menu">
-                    <button class="notification-btn">
-                        <img src="{% static 'servlist/images/notify-icon.svg' %}" alt="Notifications" class="icon">
+            <header class="flex justify-between items-center p-6 bg-slate-800 border-b border-slate-700">
+                <h1 class="text-2xl font-semibold">Dashboard</h1>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-400 hover:text-white transition-colors p-2">
+                        <i class="fas fa-bell text-xl"></i>
                     </button>
-                    <button class="settings-btn">
-                        <img src="{% static 'servlist/images/settings-icon.svg' %}" alt="Settings" class="icon">
+                    <button class="text-gray-400 hover:text-white transition-colors p-2">
+                        <i class="fas fa-cog text-xl"></i>
                     </button>
-                    <div class="user-profile">
-                        <a href="../../userprofile">
-                            <img src="{% static 'servlist/images/profile.jpg' %}" alt="Profile" class="profile-img">
-                        </a>
-                        <span id="profname"> {{ first_name }}</span>
+                    <div class="flex items-center">
+                        <img src="{% static 'images/anime1.png' %}" alt="Profile" class="w-10 h-10 rounded-full mr-3">
+                        <span>{{ first_name }} {{ last_name }}</span>
                     </div>
                 </div>
             </header>
 
             <!-- Content Sections -->
-            <section class="content">
-                <div class="recent-bookings">
-                    <h2>Recent Bookings</h2>
-                    <div class="booking-item">
-                        <span>Dog Walking</span>
-                        <button class="book-again">Book Again</button>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Recent Bookings -->
+                    <div class="bg-slate-700 rounded-lg p-6">
+                        <h2 class="text-xl font-semibold mb-4">Recent Bookings</h2>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span>Dog Walking</span>
+                                <button class="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-700">Book Again</button>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Overnight</span>
+                                <button class="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-700">Book Again</button>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Dog Walking</span>
+                                <button class="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-700">Book Again</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="booking-item">
-                        <span>Overnight</span>
-                        <button class="book-again">Book Again</button>
-                    </div>
-                    <div class="booking-item">
-                        <span>Dog Walking</span>
-                        <button class="book-again">Book Again</button>
-                    </div>
-                </div>
 
-                <div class="pet-info">
-                    <h2>Pet Information</h2>
-                    <div class="pet-details">
-                        <div class="info-row">
-                            <span>Name: </span>
+                    <!-- Pet Information -->
+                    <div class="bg-slate-700 rounded-lg p-6">
+                        <h2 class="text-xl font-semibold mb-4">Pet Information</h2>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Name:</span>
+                                <span>Max</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Type:</span>
+                                <span>Dog</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Breed:</span>
+                                <span>Labrador</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Age:</span>
+                                <span>3 years</span>
+                            </div>
                         </div>
-                        <div class="info-row">
-                            <span>Type: </span>
-                        </div>
-                        <div class="info-row">
-                            <span>Breed: </span>
-                        </div>
-                        <div class="info-row">
-                            <span>Age: </span>
-                        </div>
-                        <div class="button-group">
-                            <button class="add-pet">Add Another Pet</button>
-                            <button class="schedule">Book a Schedule</button>
+                        <div class="mt-6 flex space-x-3">
+                            <button class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-slate-700">Add Another Pet</button>
+                            <button class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-700">Book a Schedule</button>
                         </div>
                     </div>
-                </div>
 
-                <div class="current-bookings">
-                    <h2>Current Bookings</h2>
-                    <div class="no-bookings">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Service Type</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for booking in bookings %}
-                                    <tr>
-                                        <td>{{ booking.service.services }}</td>
-                                        <td>{{ booking.date }}</td>
-                                        <td>{{ booking.time }}</td>
-                                        <td>Pending</td>  <!-- Default status -->
+                    <!-- Current Bookings -->
+                    <div class="bg-slate-700 rounded-lg p-6 lg:col-span-3">
+                        <h2 class="text-xl font-semibold mb-4">Current Bookings</h2>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="text-left text-sm uppercase">
+                                        <th class="p-3 text-gray-400">Service Type</th>
+                                        <th class="p-3 text-gray-400">Date</th>
+                                        <th class="p-3 text-gray-400">Time</th>
+                                        <th class="p-3 text-gray-400">Status</th>
                                     </tr>
-                                {% empty %}
-                                    <tr>
-                                        <td colspan="4">No bookings available.</td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {% for booking in bookings %}
+                                        <tr class="border-t border-slate-600">
+                                            <td class="p-3">{{ booking.service.services }}</td>
+                                            <td class="p-3">{{ booking.date }}</td>
+                                            <td class="p-3">{{ booking.time }}</td>
+                                            <td class="p-3">
+                                                <span class="px-2 py-1 rounded text-xs font-semibold bg-yellow-500 text-yellow-900">
+                                                    Pending
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td colspan="4" class="p-3 text-center text-gray-400">No bookings available.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </section>
+            </div>
         </main>
     </div>
+
+    <!-- Message Us Modal -->
+    <div id="messageModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-slate-700 rounded-lg p-6 max-w-md w-full">
+            <h2 class="text-xl font-bold text-white mb-4">Message Us</h2>
+            <form id="messageForm">
+                <div class="mb-4">
+                    <label for="messageSubject" class="block text-sm font-medium text-gray-300 mb-2">Subject</label>
+                    <input type="text" id="messageSubject" name="subject" class="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+                <div class="mb-4">
+                    <label for="messageContent" class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+                    <textarea id="messageContent" name="content" rows="4" class="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+                </div>
+                <div class="flex justify-end space-x-2">
+                    <button type="button" id="cancelMessageBtn" class="px-4 py-2 bg-gray-500 text-white font-semibold rounded hover:bg-gray-600 transition-colors">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 transition-colors">
+                        Send Message
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const messageModal = document.getElementById('messageModal');
+        const messageUsBtn = document.getElementById('messageUsBtn');
+        const cancelMessageBtn = document.getElementById('cancelMessageBtn');
+        const messageForm = document.getElementById('messageForm');
+
+        if (messageUsBtn) {
+            messageUsBtn.addEventListener('click', function() {
+                messageModal.classList.remove('hidden');
+            });
+        }
+
+        if (cancelMessageBtn) {
+            cancelMessageBtn.addEventListener('click', function() {
+                messageModal.classList.add('hidden');
+            });
+        }
+
+        if (messageForm) {
+            messageForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Here you would typically send the message to your backend
+                alert('Message sent successfully!');
+                messageModal.classList.add('hidden');
+                messageForm.reset();
+            });
+        }
+
+        window.addEventListener('click', function(event) {
+            if (event.target === messageModal) {
+                messageModal.classList.add('hidden');
+            }
+        });
+    });
+    </script>
 </body>
 </html>

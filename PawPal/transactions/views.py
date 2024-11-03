@@ -7,8 +7,9 @@ from django.http import JsonResponse
 @login_required
 def transactions(request):
     first_name = request.user.first_name
+    last_name = request.user.last_name
     bookings = Booking.objects.filter(user_id=request.user.id, status='pending').select_related('pet', 'service')
-    return render(request, 'transactions/transactions.html', {'bookings': bookings, 'first_name': first_name})
+    return render(request, 'transactions/transactions.html', {'bookings': bookings, 'first_name': first_name, 'last_name': last_name})
 
 @login_required
 def cancel_booking(request, booking_id):
