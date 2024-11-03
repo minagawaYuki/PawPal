@@ -29,7 +29,7 @@ Administrators must be able to manage users, services, and content through a ded
 
 
 # Link to Gantt Chart
-https://cebuinstituteoftechnology-my.sharepoint.com/:x:/g/personal/charlesdarwin_hudar_cit_edu/ER7bFHu440NBubDaPf0tGZkBrd1gqkCIFbdm3BaVcdg_Gw?e=ICbWZw
+https://cebuinstituteoftechnology-my.sharepoint.com/:x:/g/personal/markadrian_baring_cit_edu/ETDD83yJgCpHk9iYj9thL9wBPULpviJsZBU_SItLhNV7HA?e=xDfOnA
 
 
 # Link to ERD
