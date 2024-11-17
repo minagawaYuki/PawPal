@@ -17,6 +17,8 @@ def dashboard_view(request):
     notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     has_new_notifications = notifications.filter(status='unread').exists()
 
+    notifications.filter(status='unread').update(status='read')
+
     return render(request, 'servlist/index.html', {
         'bookings': bookings,
         'notifications': notifications[:5],
@@ -24,6 +26,7 @@ def dashboard_view(request):
         'first_name': first_name,
         'last_name': last_name,
     })
+
 
 @login_required
 def book_schedule(request):
