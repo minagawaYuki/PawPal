@@ -11,7 +11,7 @@ def dashboard_view(request):
     last_name = request.user.last_name
     bookings = Booking.objects.filter(user_id=request.user.id, status='pending').select_related('pet', 'service')  # Use select_related to fetch related data efficiently
 
-    return render(request, 'servlist/index.html', {'bookings': bookings, 'first_name': first_name, 'last_name': last_name})
+    return render(request, 'servlist/user_dashboard.html', {'bookings': bookings, 'first_name': first_name, 'last_name': last_name})
 
 @login_required
 def book_schedule(request):

@@ -9,22 +9,22 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="bg-slate-800 text-white min-h-screen">
+<body class="bg-white-800 text-black min-h-screen">
     <div class="flex min-h-screen">
         <!-- Sidebar -->
-        <aside class="w-64 bg-slate-800 p-6 flex flex-col border-r border-slate-700">
+        <aside class="w-64 bg-white-800 p-6 flex flex-col border-r border-slate-700">
             <div class="text-2xl mb-12">Logo</div>
             
             <nav class="flex-1">
-                <a href="../../servlist/dashboard" class="flex items-center mb-4 p-3 rounded-lg text-gray-400 hover:text-white hover:bg-slate-700 transition-colors">
+                <a href="../../servlist/dashboard" class="flex items-center mb-4 p-3 rounded-lg text-black-400 hover:text-white hover:bg-slate-700 transition-colors">
                     <i class="fas fa-tachometer-alt mr-3"></i>
                     Dashboard
                 </a>
-                <a href="../userprofile" class="flex items-center mb-4 p-3 rounded-lg text-gray-400 hover:text-white hover:bg-slate-700 transition-colors">
+                <a href="../userprofile" class="flex items-center mb-4 p-3 rounded-lg text-black-400 hover:text-white hover:bg-slate-700 transition-colors">
                     <i class="fas fa-user mr-3"></i>
                     View Profile
                 </a>
-                <a href="../../servlist/book" class="flex items-center mb-4 p-3 rounded-lg text-gray-400 hover:text-white hover:bg-slate-700 transition-colors">
+                <a href="../../servlist/book" class="flex items-center mb-4 p-3 rounded-lg text-black-400 hover:text-white hover:bg-slate-700 transition-colors">
                     <i class="fas fa-calendar-plus mr-3"></i>
                     Book a Schedule
                 </a>
@@ -34,7 +34,7 @@
                 </a>
             </nav>
 
-            <button class="flex items-center text-gray-400 hover:text-white transition-colors p-3">
+            <button class="flex items-center text-black-400 hover:text-gray-400 transition-colors p-3">
                 <i class="fas fa-sign-out-alt mr-3"></i>
                 Log Out
             </button>
@@ -43,14 +43,14 @@
         <!-- Main Content -->
         <main class="flex-1">
             <!-- Header -->
-            <header class="flex justify-between items-center p-6 bg-slate-800 border-b border-slate-700">
+            <header class="flex justify-between items-center p-6 bg-white-800 border-b border-slate-700">
                 <h1 class="text-2xl font-semibold">Transaction History</h1>
                 
                 <div class="flex items-center space-x-4">
-                    <button class="text-gray-400 hover:text-white transition-colors p-2">
+                    <button class="text-black-400 hover:text-gray-400 transition-colors p-2">
                         <i class="fas fa-bell text-xl"></i>
                     </button>
-                    <button class="text-gray-400 hover:text-white transition-colors p-2">
+                    <button class="text-black-400 hover:text-gray-400 transition-colors p-2">
                         <i class="fas fa-cog text-xl"></i>
                     </button>
                     <div class="flex items-center">
@@ -62,10 +62,10 @@
 
             <!-- Transactions Table -->
             <div class="p-6">
-                <div class="bg-slate-700 rounded-lg overflow-hidden">
+                <div class="bg-white-700 rounded-lg overflow-hidden">
                     <table class="w-full">
                         <thead>
-                            <tr class="bg-slate-600 text-left text-sm uppercase">
+                            <tr class="bg-gray-200 text-left text-sm uppercase">
                                 <th class="p-3">Caretaker</th>
                                 <th class="p-3">Service</th>
                                 <th class="p-3">Date</th>

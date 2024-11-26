@@ -12,34 +12,47 @@
         function showConfirmationMessage(event) {
             event.preventDefault();
 
-            const date = document.getElementById('date').value;
+            const currentDate = new Date();
+            const date = new Date(document.getElementById('date').value);
+
+            //const date = document.getElementById('date').value;
             const time = document.getElementById('time').value;
             const petType = document.getElementById('pet_type').value;
             const petName = document.getElementById('pet_name').value;
             const service = document.getElementById('service').value;
 
             if (date && time && petType && petName && service) {
-                Swal.fire({
-                    title: 'Confirm Booking Details',
-                    html: `<b>Date:</b> ${date}<br><b>Time:</b> ${time}<br><b>Pet:</b> ${petName} (${petType})<br><b>Service:</b> ${service}`,
-                    icon: 'info',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, Confirm',
-                    cancelButtonText: 'Cancel',
-                    background: '#1e293b',
-                    color: '#ffffff'
-                }).then((result) => {
-                    if (result.isConfirmed) {
+                if(date < currentDate.setHours(0,0,0,0)){
                         Swal.fire({
-                            title: 'Booking Confirmed!',
-                            icon: 'success',
-                            background: '#1e293b',
-                            color: '#ffffff'
-                        }).then(() => {
-                            document.querySelector('form').submit();
-                        });
-                    }
-                });
+                        title: 'Invalid Date',
+                        html: `<b>Date:</b> ${date.toDateString()}`,
+                        icon: 'info',
+                        background: '#1e293b',
+                        color: '#ffffff'
+                    });
+                } else  {
+                    Swal.fire({
+                        title: 'Confirm Booking Details',
+                        html: `<b>Date:</b> ${date.toDateString()}<br><b>Time:</b> ${time}<br><b>Pet:</b> ${petName} (${petType})<br><b>Service:</b> ${service}`,
+                        icon: 'info',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, Confirm',
+                        cancelButtonText: 'Cancel',
+                        background: '#1e293b',
+                        color: '#ffffff'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                title: 'Booking Confirmed!',
+                                icon: 'success',
+                                background: '#1e293b',
+                                color: '#ffffff'
+                            }).then(() => {
+                                document.querySelector('form').submit();
+                            });
+                        }
+                    });
+                }
             } else {
                 Swal.fire({
                     title: "Please fill out all fields before confirming.",
@@ -51,18 +64,18 @@
         }
     </script>
 </head>
-<body class="bg-slate-800 text-white min-h-screen">
+<body class="bg-white text-black-400 min-h-screen">
     <div class="flex min-h-screen">
         <!-- Sidebar -->
-        <aside class="w-64 bg-slate-800 p-6 flex flex-col border-r border-slate-700">
+        <aside class="w-64 bg-white p-6 flex flex-col border-r border-slate-700">
             <div class="text-2xl mb-12">PawPal</div>
             
             <nav class="flex-1">
-                <a href="../dashboard" class="flex items-center mb-4 p-3 rounded-lg text-gray-400 hover:text-white hover:bg-slate-700 transition-colors">
+                <a href="../dashboard" class="flex items-center mb-4 p-3 rounded-lg text-black-400 hover:text-white hover:bg-slate-700 transition-colors">
                     <i class="fas fa-tachometer-alt mr-3"></i>
                     Dashboard
                 </a>
-                <a href="../../userprofile" class="flex items-center mb-4 p-3 rounded-lg text-gray-400 hover:text-white hover:bg-slate-700 transition-colors">
+                <a href="../../userprofile" class="flex items-center mb-4 p-3 rounded-lg text-black-400 hover:text-white hover:bg-slate-700 transition-colors">
                     <i class="fas fa-user mr-3"></i>
                     View Profile
                 </a>
@@ -70,13 +83,13 @@
                     <i class="fas fa-calendar-plus mr-3"></i>
                     Book a Schedule
                 </a>
-                <a href="../../transactions" class="flex items-center mb-4 p-3 rounded-lg text-gray-400 hover:text-white hover:bg-slate-700 transition-colors">
+                <a href="../../transactions" class="flex items-center mb-4 p-3 rounded-lg text-black-400 hover:text-white hover:bg-slate-700 transition-colors">
                     <i class="fas fa-history mr-3"></i>
                     Transaction History
                 </a>
             </nav>
 
-            <button class="flex items-center text-gray-400 hover:text-white transition-colors p-3">
+            <button class="flex items-center text-black-400 hover:text-gray-400 transition-colors p-3">
                 <i class="fas fa-sign-out-alt mr-3"></i>
                 Log Out
             </button>
@@ -85,14 +98,14 @@
         <!-- Main Content -->
         <main class="flex-1">
             <!-- Header -->
-            <header class="flex justify-between items-center p-6 bg-slate-800 border-b border-slate-700">
+            <header class="flex justify-between items-center p-6 bg-white border-b border-slate-700">
                 <h1 class="text-2xl font-semibold">Book a Schedule</h1>
                 
                 <div class="flex items-center space-x-4">
-                    <button class="text-gray-400 hover:text-white transition-colors p-2">
+                    <button class="text-black-400 hover:text-gray-400 transition-colors p-2">
                         <i class="fas fa-bell text-xl"></i>
                     </button>
-                    <button class="text-gray-400 hover:text-white transition-colors p-2">
+                    <button class="text-black-400 hover:text-gray-400 transition-colors p-2">
                         <i class="fas fa-cog text-xl"></i>
                     </button>
                     <div class="flex items-center">
@@ -104,38 +117,38 @@
 
             <!-- Booking Form -->
             <div class="p-6">
-                <div class="bg-slate-700 rounded-lg p-6 max-w-2xl mx-auto">
+                <div class="bg-white rounded-lg p-6 max-w-2xl mx-auto border-2 border-slate-500">
                     <form action="" method="POST" onsubmit="showConfirmationMessage(event)" class="space-y-6">
                         {% csrf_token %}
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label for="date" class="block text-sm font-medium text-gray-300 mb-2">Select Date:</label>
-                                <input type="date" id="date" name="date" required class="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <label for="date" class="block text-sm font-medium text-black-300 mb-2">Select Date:</label>
+                                <input type="date" id="date" name="date" required class="w-full px-3 py-2 bg-white-600 border border-slate-500 rounded-md text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             </div>
                             <div>
-                                <label for="time" class="block text-sm font-medium text-gray-300 mb-2">Select Time:</label>
-                                <input type="time" id="time" name="time" required class="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <label for="time" class="block text-sm font-medium text-black-300 mb-2">Select Time:</label>
+                                <input type="time" id="time" name="time" required class="w-full px-3 py-2 bg-white-600 border border-slate-500 rounded-md text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             </div>
                             <div>
-                                <label for="pet_type" class="block text-sm font-medium text-gray-300 mb-2">Pet Type:</label>
-                                <input type="text" id="pet_type" name="pet_type" placeholder="Ex. Shark" required class="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <label for="pet_type" class="block text-sm font-medium text-black-300 mb-2">Pet Type:</label>
+                                <input type="text" id="pet_type" name="pet_type" placeholder="Ex. Shark" required class="w-full px-3 py-2 bg-white-600 border border-slate-500 rounded-md text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             </div>
                             <div>
-                                <label for="pet_name" class="block text-sm font-medium text-gray-300 mb-2">Pet Name:</label>
-                                <input type="text" id="pet_name" name="pet_name" placeholder="Ex. Bella" required class="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <label for="pet_name" class="block text-sm font-medium text-black-300 mb-2">Pet Name:</label>
+                                <input type="text" id="pet_name" name="pet_name" placeholder="Ex. Bella" required class="w-full px-3 py-2 bg-white-600 border border-slate-500 rounded-md text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             </div>
                         </div>
                         <div>
-                            <label for="service" class="block text-sm font-medium text-gray-300 mb-2">Select Service:</label>
-                            <select id="service" name="service" required class="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <label for="service" class="block text-sm font-medium text-black-300 mb-2">Select Service:</label>
+                            <select id="service" name="service" required class="w-full px-3 py-2 bg-white-600 border border-slate-500 rounded-md text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 {% for service in services %}
                                     <option value="{{ service.services }}">{{ service.services }}</option>
                                 {% endfor %}
                             </select>
                         </div>
                         <div>
-                            <label for="comment" class="block text-sm font-medium text-gray-300 mb-2">Tell us more about your pet:</label>
-                            <textarea id="comment" name="comment" rows="4" placeholder="Add Comment" class="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                            <label for="comment" class="block text-sm font-medium text-black-300 mb-2">Tell us more about your pet:</label>
+                            <textarea id="comment" name="comment" rows="4" placeholder="Add Comment" class="w-full px-3 py-2 bg-white-600 border border-slate-500 rounded-md text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                         </div>
                         <div class="text-center">
                             <button type="submit" class="w-fit px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-700">

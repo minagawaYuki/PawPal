@@ -8,33 +8,33 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="bg-slate-800 text-white min-h-screen">
+<body class="bg-white-800 text-white min-h-screen">
     <!-- Navigation -->
-    <nav class="bg-slate-900 border-b border-slate-700">
+    <!-- <nav class="bg-slate-900 border-b border-slate-700">
         <ul class="flex justify-center items-center py-4 space-x-12">
             <li><a href="../../servlist/dashboard" class="text-gray-400 hover:text-white transition-colors">Dashboard</a></li>
             <li><a href="../userprofile" class="text-gray-400 hover:text-white transition-colors">View Profile</a></li>
             <li><a href="../../servlist/book" class="text-gray-400 hover:text-white transition-colors">Book a Schedule</a></li>
             <li><a href="../../servlist/dashboard" class="text-gray-400 hover:text-white transition-colors">Transaction History</a></li>
         </ul>
-    </nav>
+    </nav> -->
 
     <!-- Main Content -->
     <div class="min-h-[calc(100vh-64px)] flex items-center justify-center p-6">
         <div class="w-full max-w-md">
-            <form method="post" class="bg-slate-900 rounded-lg shadow-xl p-8">
+            <form method="post" class="bg-white-900 rounded-lg shadow-xl p-8 border-2 border-slate-600">
                 {% csrf_token %}
-                <h1 class="text-2xl font-bold text-center mb-8">Login to your account</h1>
+                <h1 class="text-2xl font-bold text-black mb-8">Login to your account</h1>
                 
                 <div class="space-y-6">
                     <div>
-                        <label class="block text-sm font-medium text-gray-400 mb-2" for="username">Username</label>
-                        {% render_field form.username placeholder="Enter your username" class+="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-500" %}
+                        <label class="block text-sm font-medium text-black-400 mb-2" for="username">Username</label>
+                        {% render_field form.username placeholder="Enter your username" class+="w-full px-4 py-2 bg-white-800 border border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-500" %}
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-400 mb-2" for="password">Password</label>
-                        {% render_field form.password placeholder="Enter your password" class+="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-500" %}
+                        <label class="block text-sm font-medium text-black-400 mb-2" for="password">Password</label>
+                        {% render_field form.password placeholder="Enter your password" class+="w-full px-4 py-2 bg-white-800 border border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-500" %}
                     </div>
 
                     {% if error %}
@@ -47,7 +47,7 @@
                         Login
                     </button>
 
-                    <p class="text-center text-gray-400 text-sm">
+                    <p class="text-center text-black-400 text-sm">
                         Don't have an account? 
                         <a href="../../../register" class="text-blue-500 hover:text-blue-400 transition-colors">Register</a>
                     </p>
