@@ -46,11 +46,11 @@ class Booking(models.Model):
         return f'Booking {self.id} - {self.pet.pet_name} for {self.service.services} on {self.date}'
     
 class Notification(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    message = models.CharField(max_length=255)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications")
+    message = models.TextField()
     status = models.CharField(max_length=10, choices=[('unread', 'Unread'), ('read', 'Read')], default='unread')
-    notification_type = models.CharField(max_length=50, choices=[('booking', 'Booking'), ('status', 'Status')], default='booking')
+    notification_type = models.CharField(max_length=50)  # e.g., 'booking', 'status_update'
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Notification for {self.user.username}: {self.message}'
+        return f"Notification for {self.user.username} - {self.message}"
