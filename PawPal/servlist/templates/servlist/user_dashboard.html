@@ -44,12 +44,34 @@
             <!-- Header -->
             <header class="flex justify-between items-center p-6 bg-white border-b border-slate-700">
                 <h1 class="text-2xl font-semibold">Dashboard</h1>
+
                 
-                <div class="flex items-center space-x-4">
-                    <button class="text-black-400 hover:text-gray-400 transition-colors p-2">
+                
+                <div class="flex items-center space-x-4 relative">
+                    <button id="notificationIcon" class="text-black hover:text-gray-400 transition-colors p-2 relative">
                         <i class="fas fa-bell text-xl"></i>
-                    </button>
-                    <button class="text-black-400 hover:text-gray-400 transition-colors p-2">
+                        {% if has_new_notifications %}
+                            <span id="notificationBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1">!</span>
+                        {% endif %}
+                    </button>                    
+                    
+                    <!-- Notification Box -->
+                    <div id="notificationBox" class="hidden absolute right-0 bottom-0 transform translate-y-full mt-2 w-80 bg-white text-black rounded-lg shadow-lg p-4 z-50 transition-opacity duration-300 ease-in-out opacity-0">
+                        <h3 class="text-lg font-semibold mb-2">Notifications</h3>
+                        <ul class="space-y-2 max-h-48 overflow-y-auto">
+                            {% for notification in notifications %}
+                                <li class="border-b border-gray-200 pb-2">
+                                    <p>{{ notification.message }}</p>
+                                    <small class="text-gray-500">{{ notification.timestamp }}</small>
+                                </li>
+                            {% empty %}
+                                <li class="text-gray-500">No new notifications.</li>
+                            {% endfor %}
+                        </ul>
+                        <button id="markRead" class="mt-3 text-blue-500 hover:underline text-sm">Mark all as read</button>
+                    </div>
+                    
+                    <button class="text-black hover:text-gray-400 transition-colors p-2">
                         <i class="fas fa-cog text-xl"></i>
                     </button>
                     <div class="flex items-center">
@@ -57,6 +79,8 @@
                         <span>{{ first_name }} {{ last_name }}</span>
                     </div>
                 </div>
+
+                
             </header>
 
             <!-- Content Sections -->
@@ -206,6 +230,37 @@
                 messageModal.classList.add('hidden');
             }
         });
+
+        const notificationIcon = document.getElementById('notificationIcon');
+            const notificationBox = document.getElementById('notificationBox');
+            const notificationBadge = document.getElementById('notificationBadge');
+            const markReadButton = document.getElementById('markRead');
+
+            notificationIcon.addEventListener('click', function() {
+                notificationBox.classList.toggle('hidden');
+                notificationBox.classList.toggle('opacity-100');
+                
+                if (notificationBadge) {
+                    notificationBadge.style.display = 'none';
+                }
+            });
+
+            markReadButton.addEventListener('click', function() {
+                fetch("{% url 'mark_notifications_as_read' %}", {
+                    method: "POST",
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json'
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        notificationBox.classList.add('hidden');
+                        alert("Notifications marked as read.");
+                    }
+                });
+            });
     });
     </script>
 </body>
