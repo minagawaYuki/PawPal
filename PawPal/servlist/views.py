@@ -6,6 +6,7 @@ from .models import Notification
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render, get_object_or_404, redirect
 import json
 
 
@@ -14,6 +15,7 @@ def dashboard_view(request):
     first_name = request.user.first_name
     last_name = request.user.last_name
     bookings = Booking.objects.filter(user_id=request.user.id, status='pending').select_related('pet', 'service')
+    past_bookings = Booking.objects.filter(user_id=request.user.id).exclude(status='pending').select_related('pet', 'service')
     notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     has_new_notifications = notifications.filter(status='unread').exists()
 
@@ -21,17 +23,39 @@ def dashboard_view(request):
 
     return render(request, 'servlist/user_dashboard.html', {
         'bookings': bookings,
+        'past_bookings':past_bookings,
         'notifications': notifications[:5],
         'has_new_notifications': has_new_notifications,
         'first_name': first_name,
         'last_name': last_name,
     })
 
+@login_required
+def book_again(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id, user=request.user)
+
+    context = {
+        'date': booking.date,
+        'time': booking.time,
+        'pet_type': booking.pet.pet_type,
+        'pet_name': booking.pet.pet_name,
+        'service': booking.service.services,
+        # Include all services for the dropdown
+        'services': Service.objects.all(),
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+    }
+
+    book_schedule(request)
+
+    return render(request, 'servlist/booking.html', context)
+
 
 @login_required
 def book_schedule(request):
     first_name = request.user.first_name
     last_name = request.user.last_name
+    service_name = None  # Initialize selected service to None
     if request.method == "POST":
         # Retrieve form data
         pet_name = request.POST.get('pet_name')
@@ -68,7 +92,7 @@ def book_schedule(request):
 
     # If GET request, return the booking form with available services
     services = Service.objects.all()  # Fetch available services from the database
-    return render(request, 'servlist/booking.html', {'services': services, 'first_name': first_name, 'last_name': last_name})
+    return render(request, 'servlist/booking.html', {'services': services, 'first_name': first_name, 'last_name': last_name, 'selected_service': service_name})
 
 
 
