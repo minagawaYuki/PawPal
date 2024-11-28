@@ -31,53 +31,65 @@ def dashboard_view(request):
     })
 
 @login_required
-def book_again(request, booking_id):
-    booking = get_object_or_404(Booking, id=booking_id, user=request.user)
-
-    context = {
-        'date': booking.date,
-        'time': booking.time,
-        'pet_type': booking.pet.pet_type,
-        'pet_name': booking.pet.pet_name,
-        'service': booking.service.services,
-        # Include all services for the dropdown
-        'services': Service.objects.all(),
-        'first_name': request.user.first_name,
-        'last_name': request.user.last_name,
-    }
-
-    book_schedule(request)
-
-    return render(request, 'servlist/booking.html', context)
+def set_booking_id(request, booking_id):
+    request.session['booking_id'] = booking_id
+    return redirect('book')  # Redirect to the 'book' view, which will use the session ID
 
 
 @login_required
 def book_schedule(request):
+    # Retrieve booking_id from query parameters (if provided)
+    booking_id = request.session.get('booking_id')
     first_name = request.user.first_name
     last_name = request.user.last_name
-    service_name = None  # Initialize selected service to None
+
+    if booking_id:  # Rebooking case
+        booking = get_object_or_404(Booking, id=booking_id, user=request.user)
+        # Prepopulate form with data from the existing booking
+        context = {
+            'date': booking.date,
+            'time': booking.time,
+            'pet_type': booking.pet.pet_type,
+            'pet_name': booking.pet.pet_name,
+            'selected_service': booking.service.services,
+            'services': Service.objects.all(),
+            'first_name': first_name,
+            'last_name': last_name,
+        }
+    else:  # New booking case
+        context = {
+            'services': Service.objects.all(),
+            'first_name': first_name,
+            'last_name': last_name,
+        }
+
     if request.method == "POST":
-        # Retrieve form data
+        # Process the form data
         pet_name = request.POST.get('pet_name')
         pet_type = request.POST.get('pet_type')
-        service_name = request.POST.get('service')  # This matches the service dropdown
+        service_name = request.POST.get('service')  # Service selected from dropdown
         date = request.POST.get('date')
         time = request.POST.get('time')
         status = 'pending'
 
-        # Handle pet: Check if pet already exists; if not, create it
+        # Check or create the pet
         pet, created = Pet.objects.get_or_create(pet_name=pet_name, pet_type=pet_type)
 
-        # Handle service: Check if the selected service exists
+        # Check if the selected service exists
         try:
             service = Service.objects.get(services=service_name)
         except Service.DoesNotExist:
-            return HttpResponse(f"Service '{service_name}' does not exist in our system.")
+            return HttpResponse(f"Service '{service_name}' does not exist.")
 
         # Create a new booking
-        booking = Booking.objects.create(user=request.user, pet=pet, service=service, date=date, time=time, status=status)
-        booking.save()
-
+        Booking.objects.create(
+            user=request.user,
+            pet=pet,
+            service=service,
+            date=date,
+            time=time,
+            status=status,
+        )
 
         Notification.objects.create(
             user=request.user,
@@ -86,14 +98,9 @@ def book_schedule(request):
             notification_type='booking'
         )
 
-
-        # Redirect to dashboard after successful booking
         return redirect('dashboard')
 
-    # If GET request, return the booking form with available services
-    services = Service.objects.all()  # Fetch available services from the database
-    return render(request, 'servlist/booking.html', {'services': services, 'first_name': first_name, 'last_name': last_name, 'selected_service': service_name})
-
+    return render(request, 'servlist/booking.html', context)
 
 
 @login_required
