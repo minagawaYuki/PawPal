@@ -4,59 +4,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
-    <link rel="stylesheet" href="../../../static/css/output.css">
+    <title>Register</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background-color: #29424f;
+        }
+
+        .register-container {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 320px;
+            text-align: center;
+        }
+
+        .register-container h2 {
+            font-size: 24px;
+            color: #29424f;
+            margin-bottom: 5px;
+        }
+
+        .register-container p {
+            font-size: 12px;
+            color: #8a8a8a;
+            margin-bottom: 20px;
+        }
+
+        .register-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .register-container input[type="text"],
+        .register-container input[type="email"],
+        .register-container input[type="password"] {
+            padding: 10px;
+            margin: 8px 0;
+            border: none;
+            border-bottom: 1px solid #8a8a8a;
+            font-size: 14px;
+            color: #29424f;
+            outline: none;
+        }
+
+        .register-container input::placeholder {
+            color: #8a8a8a;
+        }
+
+        .register-container button {
+            background-color: #4a6973;
+            color: white;
+            padding: 12px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .register-container button:hover {
+            background-color: #3a5a61;
+        }
+
+        .register-container .sign-in {
+            font-size: 12px;
+            color: #8a8a8a;
+            margin-top: 15px;
+        }
+
+        .register-container .sign-in a {
+            color: #29424f;
+            text-decoration: none;
+        }
+
+        .register-container .sign-in a:hover {
+            color: #3a5a61;
+        }
+    </style>
 </head>
 <body>
-    <nav>
-        <ul class="flex text-lg w-full justify-center font-semibold items-center bg-background gap-x-12">
-            <li class="my-4"><a href="../../servlist/dashboard">Dashboard</a></li>
-            <li><a href="../userprofile">View Profile</a></li>
-            <li><a href="../../servlist/book">Book a Schedule</a></li>
-            <li><a href="../../servlist/dashboard">Transaction History</a></li>
-        </ul>
-    </nav>
-    <div class="container bg-background">
-        <div class="user-field flex w-full p-16 justify-center">
-            <form class="inputfields w-fit flex flex-col items-center bg-container px-32 py-16 gap-y-4 rounded-lg" method="post">
-                {% csrf_token %}
-                <h1 class="text-lg font-bold">Register</h1>
-                <input type="hidden" name="user_id" value="{{ user.id }}">
-                <div class="firstname-field flex flex-col">
-                    <label class="w-fit text-sm" for="firstname">First Name</label>
-                    {% render_field form.first_name placeholder="First Name" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
-                </div>
-                <div class="firstname-field flex flex-col">
-                    <label class="w-fit text-sm" for="firstname">Last Name</label>
-                    {% render_field form.last_name placeholder="Last Name" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
-                </div>
-                <div class="firstname-field flex flex-col">
-                    <label class="w-fit text-sm" for="firstname">Username</label>
-                    {% render_field form.username placeholder="Username" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
-                </div>
-                <div class="firstname-field flex flex-col">
-                    <label class="w-fit text-sm" for="firstname">Email</label>
-                    {% render_field form.email placeholder="Email" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
-                </div>
-                <div class="firstname-field flex flex-col">
-                    <label class="w-fit text-sm" for="firstname">Password</label>
-                    {% render_field form.password placeholder="Password" class+="border-2 border-black w-96  bg-textfield px-2 py-1 rounded-md" %}
-                </div>
-                <button class="w-fit text-white bg-button px-6 py-2 hover:cursor-pointer hover:bg-black rounded-full" type="submit">Register</button>
-            </form>
-        </div>
-        <h1>Users</h1>
-        <ul>
+    <div class="register-container">
+        <h2>Create an Account</h2>
+        <p>Already have an account? <a href="../../../login">Sign In</a></p>
 
-            <li>First Name:</li>
-            <li>Last Name:</li>
-            <li>Email:</li>
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="user_id" value="{{ user.id }}">
-                <button type="submit">Save</button>
-            </form>
-        </ul>
+        <form method="post">
+            {% csrf_token %}
+            {% render_field form.first_name placeholder="First Name" class+="form-control" %}
+            {% render_field form.last_name placeholder="Last Name" class+="form-control" %}
+            {% render_field form.email placeholder="Email Address" class+="form-control" %}
+            {% render_field form.username placeholder="Username" class+="form-control" %}
+            {% render_field form.password placeholder="Password" class+="form-control" %}
+            <button type="submit">Sign Up</button>
+        </form>
     </div>
 </body>
 </html>
