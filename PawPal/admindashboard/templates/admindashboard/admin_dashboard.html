@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PawPal - Admin Dashboard</title>
+    <title>PawPal - Admin - Dashboard</title>
     <link href="{% static 'css/output.css' %}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -153,7 +153,9 @@
                 <button id="cancelButton" class="px-4 py-2 bg-gray-200 text-gray-800 font-semibold rounded-md hover:bg-gray-300 transition-colors">
                     Cancel
                 </button>
-                <button id="confirmButton" class="px-4 py-2 text-white font-semibold rounded-md transition-colors"></button>
+                <button id="confirmButton" class="px-4 py-2 bg-green-200 text-green-8000 font-semibold rounded-md transition-colors">
+                    Confirm
+                </button>
             </div>
         </div>
     </div>
@@ -192,7 +194,7 @@
     const commentContent = document.getElementById("commentContent");
     const commentCloseButton = document.getElementById("commentCloseButton");
 
-    // Show modal when "View Comment" button is clicked
+    // View Comment
     document.querySelectorAll(".view-comment-button").forEach(button => {
         button.addEventListener("click", function () {
             const comment = this.getAttribute("data-comment");
@@ -201,7 +203,6 @@
         });
     });
 
-    // Close modal when "Close" button is clicked
     commentCloseButton.addEventListener("click", function () {
         commentModal.classList.add("hidden");
     });
