@@ -27,6 +27,7 @@ class Booking(models.Model):
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     date = models.DateField()
     time = models.TimeField()
+    comment = models.TextField(blank=True, null=True)
     status = models.CharField(max_length=50, choices=[
         ('pending', 'Pending'),
         ('accepted', 'Accepted'),

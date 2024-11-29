@@ -55,6 +55,7 @@ def book_schedule(request):
             'services': Service.objects.all(),
             'first_name': first_name,
             'last_name': last_name,
+            'comment': booking.comment,
         }
     else:  # New booking case
         context = {
@@ -70,6 +71,7 @@ def book_schedule(request):
         service_name = request.POST.get('service')  # Service selected from dropdown
         date = request.POST.get('date')
         time = request.POST.get('time')
+        comment = request.POST.get('comment')
         status = 'pending'
 
         # Check or create the pet
@@ -88,6 +90,7 @@ def book_schedule(request):
             service=service,
             date=date,
             time=time,
+            comment=comment,
             status=status,
         )
 

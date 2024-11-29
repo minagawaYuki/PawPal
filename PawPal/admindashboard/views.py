@@ -73,7 +73,6 @@ def accept_booking(request):
             service_name = booking.service.services if booking.service else "Unknown Service"
             pet_name = booking.pet.pet_name if booking.pet else "Unknown Pet"
 
-            # Create a notification for the pet owner
             Notification.objects.create(
                 user=booking.user,
                 message=f"Your booking for {pet_name} - {service_name} on {booking.date} at {booking.time} has been accepted.",
