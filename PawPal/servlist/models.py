@@ -41,7 +41,6 @@ class Booking(models.Model):
             'accepted': f"Your booking for {self.service.services} with {self.pet.pet_name} on {self.date} has been accepted.",
             'canceled': f"Unfortunately, your booking for {self.service.services} with {self.pet.pet_name} on {self.date} was canceled."
         }
-        message = status_messages.get(self.status, "Your booking status has been updated.")
     
     def __str__(self):
         return f'Booking {self.id} - {self.pet.pet_name} for {self.service.services} on {self.date}'
@@ -50,8 +49,21 @@ class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications")
     message = models.TextField()
     status = models.CharField(max_length=10, choices=[('unread', 'Unread'), ('read', 'Read')], default='unread')
-    notification_type = models.CharField(max_length=50)  # e.g., 'booking', 'status_update'
+    notification_type = models.CharField(max_length=50)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Notification for {self.user.username} - {self.message}"
+
+
+# NEEDED DATABASE
+# class Message(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='messages')
+#     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner_sent_messages')
+#     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages', null=True) # non-nullable field pani siya, tan.awa lng unsa possible error
+#     content = models.TextField()
+#     timestamp = models.DateTimeField(auto_now_add=True)  # Automatically set the timestamp kuyaw kaysa
+
+#     def __str__(self):
+#         return f"Message from {self.sender.username} to {self.recipient.username} at {self.timestamp}"
+

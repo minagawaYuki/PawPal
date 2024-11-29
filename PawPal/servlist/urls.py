@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-from .views import book_schedule, mark_notifications_as_read
 
 urlpatterns = [
     path('dashboard/', views.dashboard_view, name='dashboard'),
@@ -9,3 +8,5 @@ urlpatterns = [
     path('mark_notifications_as_read/', views.mark_notifications_as_read, name='mark_notifications_as_read'),
     path('update-booking-status/<int:booking_id>/<str:new_status>/', views.update_booking_status, name='update_booking_status'),
 ]
+
+# path('messages/', views.messages_view, name='messages'),

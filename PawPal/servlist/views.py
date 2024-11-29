@@ -9,7 +9,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404, redirect
 import json
 
-
 @login_required
 def dashboard_view(request):
     first_name = request.user.first_name
@@ -33,12 +32,11 @@ def dashboard_view(request):
 @login_required
 def set_booking_id(request, booking_id):
     request.session['booking_id'] = booking_id
-    return redirect('book')  # Redirect to the 'book' view, which will use the session ID
+    return redirect('book')
 
 
 @login_required
 def book_schedule(request):
-    # Retrieve booking_id from query parameters (if provided)
     booking_id = request.session.get('booking_id')
     first_name = request.user.first_name
     last_name = request.user.last_name
@@ -166,3 +164,47 @@ def delete_booking(request):
         except Booking.DoesNotExist:
             return JsonResponse({"success": False, "error": "Booking not found"})
     return JsonResponse({"success": False, "error": "Invalid request"})
+
+
+
+
+#NEED DATABASE JD
+# # Messages
+# @login_required
+# def messages_view(request):
+#     if request.user.is_staff:  # Admin view
+#         messages = Message.objects.all().order_by('timestamp')
+#     else:  # Pet owner view
+#         messages = Message.objects.filter(user=request.user).order_by('timestamp')
+
+#     context = {'messages': messages, 'user': request.user}
+#     return render(request, 'servlist/messages.html', context)
+
+
+# @login_required
+# def send_message(request):
+#     if request.method == 'POST':
+#         content = request.POST.get('message')
+#         recipient_username = request.POST.get('recipient')
+
+#         try:
+#             recipient = User.objects.get(username=recipient_username)
+#         except User.DoesNotExist:
+#             return HttpResponse("Recipient not found.")
+
+#         if content:
+#             Message.objects.create(
+#                 user=request.user,
+#                 sender=request.user,
+#                 recipient=recipient,
+#                 content=content,
+#             )
+#             return redirect('messages')
+
+#     if request.user.is_staff:
+#         users = User.objects.filter(is_staff=False) 
+#     else:
+#         users = User.objects.filter(is_staff=True)
+
+#     return render(request, 'servlist/send_message.html', {'users': users})
+

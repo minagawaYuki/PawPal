@@ -139,3 +139,11 @@ def delete_booking(request):
             return JsonResponse({"success": False, "error": "Booking not found"}, status=404)
         except Exception as e:
             return JsonResponse({"success": False, "error": str(e)}, status=500)
+        
+
+# NEED JD DATA BASE
+# @login_required
+# def admin_messages_view(request):
+#     messages = AdminMessage.objects.all().order_by('-timestamp')
+#     context = {'messages': messages}
+#     return render(request, 'admindashboard/admin_messages.html')
