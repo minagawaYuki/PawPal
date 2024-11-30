@@ -14,7 +14,7 @@ def admin_dashboard(request):
 @login_required
 def bookings(request):
     bookings = Booking.objects.filter(status='pending').select_related('user', 'pet', 'service')
-    return render(request, 'admindashboard/admin_dashboard.html', {'bookings': bookings})
+    return render(request, 'admindashboard/bookings.html', {'bookings': bookings})
 
 @login_required
 def ongoing_bookings(request):
