@@ -8,8 +8,13 @@ from servlist.models import Booking, Notification
 
 @login_required
 def admin_dashboard(request):
-    bookings = Booking.objects.filter(status='pending').select_related('user', 'pet', 'service')
-    return render(request, 'admindashboard/admin_dashboard.html', {'bookings': bookings})
+    total_bookings = len(Booking.objects.all())
+    pending_requests = len(Booking.objects.filter(status='pending'))
+    recent_bookings = Booking.objects.exclude(status='canceled').order_by('-id')[:10]
+    return render(request, 'admindashboard/admin_dashboard.html', {'bookings': bookings,
+                                                                   'total_bookings': total_bookings,
+                                                                   'pending_requests': pending_requests,
+                                                                   'recent_bookings': recent_bookings})
 
 @login_required
 def bookings(request):
@@ -18,12 +23,12 @@ def bookings(request):
 
 @login_required
 def ongoing_bookings(request):
-    bookings = Booking.objects.filter(status='accepted').select_related('user', 'pet', 'service')
+    bookings = Booking.objects.filter(status='accepted').select_related('user', 'pet', 'service').order_by('-id')
     return render(request, 'admindashboard/ongoing_bookings.html', {'bookings': bookings})
 
 @login_required
 def finished_bookings(request):
-    bookings = Booking.objects.filter(status='finished').select_related('user', 'pet', 'service')
+    bookings = Booking.objects.filter(status='finished').select_related('user', 'pet', 'service').order_by('-id')
     return render(request, 'admindashboard/finished_bookings.html', {'bookings': bookings})
 
 @login_required
