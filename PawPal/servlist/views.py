@@ -196,36 +196,3 @@ def delete_booking(request):
         except Booking.DoesNotExist:
             return JsonResponse({"success": False, "error": "Booking not found"})
     return JsonResponse({"success": False, "error": "Invalid request"})
-
-
-
-
-
-
-# @login_required
-# def send_message(request):
-#     if request.method == 'POST':
-#         content = request.POST.get('message')
-#         recipient_username = request.POST.get('recipient')
-
-#         try:
-#             recipient = User.objects.get(username=recipient_username)
-#         except User.DoesNotExist:
-#             return HttpResponse("Recipient not found.")
-
-#         if content:
-#             Message.objects.create(
-#                 user=request.user,
-#                 sender=request.user,
-#                 recipient=recipient,
-#                 content=content,
-#             )
-#             return redirect('messages')
-
-#     if request.user.is_staff:
-#         users = User.objects.filter(is_staff=False) 
-#     else:
-#         users = User.objects.filter(is_staff=True)
-
-#     return render(request, 'servlist/send_message.html', {'users': users})
-

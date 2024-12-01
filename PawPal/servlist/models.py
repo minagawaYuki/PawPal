@@ -51,6 +51,7 @@ class Notification(models.Model):
 
 class Message(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='messages')
+    # sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages')
     sender = models.CharField(max_length=255, default=1)
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)  # Auto-generated timestamp
