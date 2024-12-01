@@ -5,14 +5,18 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from servlist.models import Booking
 from servlist.models import Booking, Notification
-
+from django.contrib.auth.models import User
 @login_required
 def admin_dashboard(request):
     total_bookings = len(Booking.objects.all())
+    active_users = len(User.objects.all())
+    total_revenue = 255 * len(Booking.objects.filter(status='finished'))
     pending_requests = len(Booking.objects.filter(status='pending'))
     recent_bookings = Booking.objects.exclude(status='canceled').order_by('-id')[:10]
     return render(request, 'admindashboard/admin_dashboard.html', {'bookings': bookings,
                                                                    'total_bookings': total_bookings,
+                                                                   'active_users': active_users,
+                                                                   'total_revenue': total_revenue,
                                                                    'pending_requests': pending_requests,
                                                                    'recent_bookings': recent_bookings})
 
