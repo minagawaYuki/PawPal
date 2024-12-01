@@ -6,11 +6,12 @@ from django.contrib.auth.decorators import login_required
 from servlist.models import Booking
 from servlist.models import Booking, Notification
 from django.contrib.auth.models import User
+from django.utils.timezone import now
 @login_required
 def admin_dashboard(request):
     total_bookings = len(Booking.objects.all())
     active_users = len(User.objects.all())
-    total_revenue = 255 * len(Booking.objects.filter(status='finished'))
+    total_revenue = 1275 * len(Booking.objects.filter(status='finished'))
     pending_requests = len(Booking.objects.filter(status='pending'))
     recent_bookings = Booking.objects.exclude(status='canceled').order_by('-id')[:10]
     return render(request, 'admindashboard/admin_dashboard.html', {'bookings': bookings,
@@ -105,6 +106,7 @@ def finish_booking(request):
 
             booking = Booking.objects.get(id=booking_id)
             booking.status = "finished"
+            booking.finish_date = now()
             booking.save()
 
             service_name = booking.service.services if booking.service else "Unknown Service"

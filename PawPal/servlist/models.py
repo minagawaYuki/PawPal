@@ -33,6 +33,7 @@ class Booking(models.Model):
         ('canceled', 'Canceled'),
         ('finished', 'Finished')
     ])
+    finish_date = models.DateField()
     
     def notify_user_status_change(self):
         # FOR STATUSES
