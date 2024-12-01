@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Pet, Service, Booking
+from .models import Pet, Service, Booking, Message
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import Notification
@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404, redirect
 import json
+from admindashboard.models import AdminMessage
 
 @login_required
 def dashboard_view(request):
@@ -104,6 +105,37 @@ def book_schedule(request):
     return render(request, 'servlist/booking.html', context)
 
 
+# Messages
+@login_required
+def messages_view(request):
+    if request.method == "POST":
+        # Pet Owner sending a message
+        message_content = request.POST.get('message')
+        if message_content:
+            Message.objects.create(
+                user=request.user,
+                sender=request.user.username,
+                content=message_content
+            )
+            return redirect('messages')
+
+    # Fetch messages sent by the pet owner
+    user_messages = Message.objects.filter(user=request.user).order_by('timestamp')
+
+    # Fetch messages received by the pet owner from the admin
+    admin_messages = AdminMessage.objects.filter(receiver=request.user).order_by('timestamp')
+
+    context = {
+        'user_messages': user_messages,
+        'admin_messages': admin_messages,
+        'user': request.user.username,
+    }
+    return render(request, 'servlist/messages.html', context)
+
+
+
+
+
 @login_required
 def update_booking_status(request, booking_id, new_status):
     if not request.user.is_staff:
@@ -168,17 +200,6 @@ def delete_booking(request):
 
 
 
-#NEED DATABASE JD
-# # Messages
-# @login_required
-# def messages_view(request):
-#     if request.user.is_staff:  # Admin view
-#         messages = Message.objects.all().order_by('timestamp')
-#     else:  # Pet owner view
-#         messages = Message.objects.filter(user=request.user).order_by('timestamp')
-
-#     context = {'messages': messages, 'user': request.user}
-#     return render(request, 'servlist/messages.html', context)
 
 
 # @login_required

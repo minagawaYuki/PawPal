@@ -35,13 +35,6 @@ class Booking(models.Model):
         ('finished', 'Finished')
     ])
     
-    def notify_user_status_change(self):
-        # FOR STATUSES
-        status_messages = {
-            'accepted': f"Your booking for {self.service.services} with {self.pet.pet_name} on {self.date} has been accepted.",
-            'canceled': f"Unfortunately, your booking for {self.service.services} with {self.pet.pet_name} on {self.date} was canceled."
-        }
-    
     def __str__(self):
         return f'Booking {self.id} - {self.pet.pet_name} for {self.service.services} on {self.date}'
     
@@ -56,14 +49,15 @@ class Notification(models.Model):
         return f"Notification for {self.user.username} - {self.message}"
 
 
-# NEEDED DATABASE
-# class Message(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='messages')
-#     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner_sent_messages')
-#     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages', null=True) # non-nullable field pani siya, tan.awa lng unsa possible error
-#     content = models.TextField()
-#     timestamp = models.DateTimeField(auto_now_add=True)  # Automatically set the timestamp kuyaw kaysa
+class Message(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='messages')
+    sender = models.CharField(max_length=255, default=1)
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)  # Auto-generated timestamp
 
-#     def __str__(self):
-#         return f"Message from {self.sender.username} to {self.recipient.username} at {self.timestamp}"
+    def __str__(self):
+        return f"Message from {self.sender} at {self.timestamp}"
+
+
+
 

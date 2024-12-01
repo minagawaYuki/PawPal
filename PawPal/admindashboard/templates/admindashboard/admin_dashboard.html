@@ -192,7 +192,6 @@
     const commentContent = document.getElementById("commentContent");
     const commentCloseButton = document.getElementById("commentCloseButton");
 
-    // Show modal when "View Comment" button is clicked
     document.querySelectorAll(".view-comment-button").forEach(button => {
         button.addEventListener("click", function () {
             const comment = this.getAttribute("data-comment");
@@ -201,7 +200,6 @@
         });
     });
 
-    // Close modal when "Close" button is clicked
     commentCloseButton.addEventListener("click", function () {
         commentModal.classList.add("hidden");
     });
