@@ -167,9 +167,9 @@ def admin_messages_view(request):
         
         if message_id and reply_content:
             original_message = get_object_or_404(Message, id=message_id)
-            AdminMessage.objects.create(
-                sender=request.user,
-                receiver=original_message.user,  # Set the pet owner as the receiver
+            Message.objects.create(
+                user=request.user,
+                sender='admin',
                 content=reply_content
             )
             return redirect('admin_messages')  # Redirect to the same page after replying

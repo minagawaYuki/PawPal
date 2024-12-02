@@ -114,7 +114,7 @@ def messages_view(request):
         if message_content:
             Message.objects.create(
                 user=request.user,
-                sender=request.user.username,
+                sender=request.user.first_name,
                 content=message_content
             )
             return redirect('messages')
@@ -131,6 +131,34 @@ def messages_view(request):
         'user': request.user.username,
     }
     return render(request, 'servlist/messages.html', context)
+
+def get_messages(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        message_content = data.get('message')
+        if message_content:
+            Message.objects.create(
+                user=request.user,
+                sender='user',
+                content=message_content
+            )
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False, 'error': 'No content provided.'})
+
+    # For GET requests, fetch messages
+    user_messages = Message.objects.filter(user=request.user)
+    admin_messages = AdminMessage.objects.filter(receiver=request.user)
+
+    messages = [
+        {
+            'sender': msg.sender,
+            'content': msg.content,
+            'timestamp': msg.timestamp.isoformat()
+        }
+        for msg in user_messages.union(admin_messages).order_by('timestamp')
+    ]
+
+    return JsonResponse({'messages': messages})
 
 
 
