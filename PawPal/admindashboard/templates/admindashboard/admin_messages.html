@@ -78,7 +78,8 @@
                         data-username="{{ message.user.username }}"
                     >
                         <div class="h-10 w-10 bg-gray-300 rounded-full flex items-center justify-center text-white">
-                            {{ message.user.username|default:"U" }}
+                            <!-- {{ message.user.username|default:"U" }} -->
+                            <img src="{% static 'images/anime1.png' %}" alt="Profile" class="w-10 h-10 rounded-full border-2 border-blue-500">
                         </div>
                         <div>
                             <p class="font-medium">{{ message.user.username }}</p>
