@@ -14,7 +14,7 @@ def login_page(request):
 
         if user is not None:
             login(request, user)
-            return redirect('user_profile')
+            return redirect('dashboard')
         else:
             error = "Invalid credentials"
             return render(request, 'login/login.html', {'form': form, 'error': error})
