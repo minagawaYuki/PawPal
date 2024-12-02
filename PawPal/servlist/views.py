@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Pet, Service, Booking
+from .models import Pet, Service, Booking, Message
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import Notification
@@ -8,14 +8,14 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404, redirect
 import json
-
+from admindashboard.models import AdminMessage
 
 @login_required
 def dashboard_view(request):
     first_name = request.user.first_name
     last_name = request.user.last_name
     bookings = Booking.objects.filter(user_id=request.user.id, status='pending').select_related('pet', 'service')
-    past_bookings = Booking.objects.filter(user_id=request.user.id).exclude(status='pending').select_related('pet', 'service')
+    past_bookings = Booking.objects.filter(user_id=request.user.id).exclude(status='pending').order_by('-id').select_related('pet', 'service')[:5]
     notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     has_new_notifications = notifications.filter(status='unread').exists()
 
@@ -33,12 +33,11 @@ def dashboard_view(request):
 @login_required
 def set_booking_id(request, booking_id):
     request.session['booking_id'] = booking_id
-    return redirect('book')  # Redirect to the 'book' view, which will use the session ID
+    return redirect('book')
 
 
 @login_required
 def book_schedule(request):
-    # Retrieve booking_id from query parameters (if provided)
     booking_id = request.session.get('booking_id')
     first_name = request.user.first_name
     last_name = request.user.last_name
@@ -104,6 +103,65 @@ def book_schedule(request):
         return redirect('dashboard')
 
     return render(request, 'servlist/booking.html', context)
+
+
+# Messages
+@login_required
+def messages_view(request):
+    if request.method == "POST":
+        # Pet Owner sending a message
+        message_content = request.POST.get('message')
+        if message_content:
+            Message.objects.create(
+                user=request.user,
+                sender=request.user.first_name,
+                content=message_content
+            )
+            return redirect('messages')
+
+    # Fetch messages sent by the pet owner
+    user_messages = Message.objects.filter(user=request.user).order_by('timestamp')
+
+    # Fetch messages received by the pet owner from the admin
+    admin_messages = AdminMessage.objects.filter(receiver=request.user).order_by('timestamp')
+
+    context = {
+        'user_messages': user_messages,
+        'admin_messages': admin_messages,
+        'user': request.user.username,
+    }
+    return render(request, 'servlist/messages.html', context)
+
+def get_messages(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        message_content = data.get('message')
+        if message_content:
+            Message.objects.create(
+                user=request.user,
+                sender='user',
+                content=message_content
+            )
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False, 'error': 'No content provided.'})
+
+    # For GET requests, fetch messages
+    user_messages = Message.objects.filter(user=request.user)
+    admin_messages = AdminMessage.objects.filter(receiver=request.user)
+
+    messages = [
+        {
+            'sender': msg.sender,
+            'content': msg.content,
+            'timestamp': msg.timestamp.isoformat()
+        }
+        for msg in user_messages.union(admin_messages).order_by('timestamp')
+    ]
+
+    return JsonResponse({'messages': messages})
+
+
+
 
 
 @login_required
