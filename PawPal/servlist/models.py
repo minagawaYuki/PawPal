@@ -28,13 +28,13 @@ class Booking(models.Model):
     date = models.DateField()
     time = models.TimeField()
     comment = models.TextField(blank=True, null=True)
+    finish_date = models.DateField(blank=True, null=True)
     status = models.CharField(max_length=50, choices=[
         ('pending', 'Pending'),
         ('accepted', 'Accepted'),
         ('canceled', 'Canceled'),
         ('finished', 'Finished')
     ])
-    finish_date = models.DateField()
     
     def __str__(self):
         return f'Booking {self.id} - {self.pet.pet_name} for {self.service.services} on {self.date}'
@@ -58,7 +58,3 @@ class Message(models.Model):
 
     def __str__(self):
         return f"Message from {self.sender} at {self.timestamp}"
-
-
-
-
