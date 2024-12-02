@@ -14,81 +14,214 @@
     </style>
 </head>
 <body class="bg-gray-100">
-<div class="max-w-4xl mx-auto p-6">
-    <!-- All User Messages Section -->
-    <section class="bg-white shadow rounded-lg p-6 mb-8">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">All User Messages</h2>
-        <div class="overflow-x-auto border border-gray-200 rounded-lg">
-            <table class="min-w-full text-left text-sm">
-                <thead class="bg-gray-100 text-gray-600 uppercase text-xs font-medium">
-                    <tr>
-                        <th class="px-4 py-3">User</th>
-                        <th class="px-4 py-3">Message</th>
-                        <th class="px-4 py-3">Timestamp</th>
-                        <th class="px-4 py-3">Reply</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200 text-gray-700">
-                    {% for message in pet_owner_messages %}
-                    <tr>
-                        <td class="px-4 py-3">{{ message.user.username }}</td>
-                        <td class="px-4 py-3">{{ message.content }}</td>
-                        <td class="px-4 py-3">{{ message.timestamp }}</td>
-                        <td class="px-4 py-3">
-                            <form method="POST" class="space-y-2">
-                                {% csrf_token %}
-                                <input type="hidden" name="message_id" value="{{ message.id }}">
-                                <textarea 
-                                    name="reply" 
-                                    rows="2" 
-                                    class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500" 
-                                    placeholder="Type your reply..."></textarea>
-                                <button 
-                                    type="submit" 
-                                    class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-                                    Send Reply
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="4" class="px-4 py-3 text-center text-gray-500">No messages found.</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </section>
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white p-6 border-r border-gray-200 flex flex-col">
+            <div class="flex items-center gap-2 text-2xl font-bold text-blue-600 mb-12">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                </svg>
+                <span>PawPal</span>
+            </div>
+            
+            <nav class="space-y-2 flex-1">
+                <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg bg-blue-50 text-blue-700 font-medium">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="{% url 'bookings' %}" class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                    </svg>
+                    Bookings
+                </a>
+                <a href="{% url 'ongoing_bookings' %}" class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Ongoing Bookings
+                </a>
+                <a href="{% url 'finished_bookings' %}" class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Finished Bookings
+                </a>
+                <a href="{% url 'admin_messages' %}" class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+                    </svg>
+                    Messages
+                </a>
+        </nav>
 
-    <!-- Admin Sent Messages Section -->
-    <section class="bg-white shadow rounded-lg p-6">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Admin Sent Messages</h2>
-        <div class="overflow-x-auto border border-gray-200 rounded-lg">
-            <table class="min-w-full text-left text-sm">
-                <thead class="bg-gray-100 text-gray-600 uppercase text-xs font-medium">
-                    <tr>
-                        <th class="px-4 py-3">Receiver</th>
-                        <th class="px-4 py-3">Message</th>
-                        <th class="px-4 py-3">Timestamp</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200 text-gray-700">
-                    {% for message in admin_messages %}
-                    <tr>
-                        <td class="px-4 py-3">{{ message.receiver.username }}</td>
-                        <td class="px-4 py-3">{{ message.content }}</td>
-                        <td class="px-4 py-3">{{ message.timestamp }}</td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="3" class="px-4 py-3 text-center text-gray-500">No sent messages found.</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </section>
-</div>
+            <button class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors mt-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16 17 21 12 16 7"/>
+                    <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+                Log Out
+            </button>
+        </aside>
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white p-6 border-r border-gray-200 flex flex-col">
+            <div class="flex items-center gap-2 text-2xl font-bold text-blue-600 mb-12">
+            </div>
+            <nav class="space-y-2 flex-1 overflow-y-auto" id="user-list">
+                {% for message in pet_owner_messages %}
+                    <button 
+                        class="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 rounded-lg w-full text-left"
+                        data-user-id="{{ message.user.id }}"
+                        data-username="{{ message.user.username }}"
+                    >
+                        <div class="h-10 w-10 bg-gray-300 rounded-full flex items-center justify-center text-white">
+                            {{ message.user.username|default:"U" }}
+                        </div>
+                        <div>
+                            <p class="font-medium">{{ message.user.username }}</p>
+                        </div>
+                    </button>
+                {% empty %}
+                    <p class="px-4 py-2 text-gray-500">No messages to display.</p>
+                {% endfor %}
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col">
+            <!-- Header -->
+            <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+                <h1 class="text-2xl font-semibold text-gray-800" id="chat-username">Messages</h1>
+            </header>
+
+            <!-- Message Container -->
+            <div class="flex-1 overflow-y-auto p-6 bg-gray-50" id="chat-container">
+                <p class="text-center text-gray-500">Select a user to view their messages.</p>
+            </div>
+
+            <!-- Message Input -->
+            <div class="bg-white border-t border-gray-200 p-4">
+                <form id="message-form" class="flex space-x-2">
+                    {% csrf_token %}
+                    <input type="hidden" id="active-user-id">
+                    <input 
+                        type="text" 
+                        id="message-input" 
+                        placeholder="Type your message..." 
+                        class="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                    <button 
+                        type="submit" 
+                        class="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const chatContainer = document.getElementById('chat-container');
+            const chatUsername = document.getElementById('chat-username');
+            const messageInput = document.getElementById('message-input');
+            const activeUserId = document.getElementById('active-user-id');
+            const messageForm = document.getElementById('message-form');
+            const userList = document.getElementById('user-list');
+
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            // Load user messages
+            userList.addEventListener('click', function (e) {
+                const button = e.target.closest('button[data-user-id]');
+                if (!button) return;
+
+                const userId = button.getAttribute('data-user-id');
+                const username = button.getAttribute('data-username');
+
+                activeUserId.value = userId;
+                chatUsername.textContent = `Chat with ${username}`;
+                chatContainer.innerHTML = '<p class="text-center text-gray-500">Loading messages...</p>';
+
+                fetch(`/admin/messages/${userId}/`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        chatContainer.innerHTML = '';
+                        data.messages.forEach((msg) => {
+                            const alignment = msg.is_admin ? 'justify-end' : 'justify-start';
+                            const bgClass = msg.is_admin ? 'bg-blue-100' : 'bg-green-100';
+
+                            const messageEl = document.createElement('div');
+                            messageEl.className = `flex items-start space-x-2 mb-4 ${alignment}`;
+                            messageEl.innerHTML = `
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+                                        <span class="text-white text-xs font-medium">${msg.sender_initial}</span>
+                                    </div>
+                                </div>
+                                <div class="flex-1 max-w-md">
+                                    <div class="p-3 rounded-lg ${bgClass}">
+                                        <p class="text-sm">${msg.content}</p>
+                                        <span class="text-xs text-gray-500 block mt-1">${msg.timestamp}</span>
+                                    </div>
+                                </div>
+                            `;
+                            chatContainer.appendChild(messageEl);
+                        });
+
+                        if (!data.messages.length) {
+                            chatContainer.innerHTML = '<p class="text-center text-gray-500">No messages yet.</p>';
+                        }
+                    });
+            });
+
+            // Send a message
+            messageForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const messageText = messageInput.value.trim();
+                const userId = activeUserId.value;
+
+                if (!messageText || !userId) return;
+
+                fetch(`/admin/messages/${userId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken,
+                    },
+                    body: JSON.stringify({ message: messageText }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.success) {
+                            const newMessageEl = document.createElement('div');
+                            newMessageEl.className = 'flex items-start space-x-2 mb-4 justify-end';
+                            newMessageEl.innerHTML = `
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+                                        <span class="text-white text-xs font-medium">A</span>
+                                    </div>
+                                </div>
+                                <div class="flex-1 max-w-md">
+                                    <div class="p-3 rounded-lg bg-blue-100">
+                                        <p class="text-sm">${messageText}</p>
+                                        <span class="text-xs text-gray-500 block mt-1">Now</span>
+                                    </div>
+                                </div>
+                            `;
+                            chatContainer.appendChild(newMessageEl);
+                            chatContainer.scrollTop = chatContainer.scrollHeight;
+                            messageInput.value = '';
+                        }
+                    });
+            });
+        });
+    </script>
 </body>
 </html>

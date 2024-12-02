@@ -182,3 +182,53 @@ def admin_messages_view(request):
         'admin_messages': admin_messages,
     }
     return render(request, 'admindashboard/admin_messages.html', context)
+
+@login_required
+def admin_get_messages(request):
+    if not request.user.is_staff:  # Ensure the user is an admin
+        return JsonResponse({'success': False, 'error': 'Unauthorized access.'}, status=403)
+
+    if request.method == "POST":
+        # Admin is sending a reply to a pet owner's message
+        data = json.loads(request.body)
+        message_id = data.get('message_id')
+        reply_content = data.get('reply')
+
+        if message_id and reply_content:
+            original_message = get_object_or_404(Message, id=message_id)
+            AdminMessage.objects.create(
+                receiver=original_message.user,
+                sender=request.user.first_name,
+                content=reply_content
+            )
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False, 'error': 'Invalid message ID or content.'})
+
+    # For GET requests, fetch all messages
+    pet_owner_messages = Message.objects.all().order_by('timestamp')  # Messages from pet owners
+    admin_messages = AdminMessage.objects.all().order_by('timestamp')  # Replies from admin
+
+    # Combine and sort messages by timestamp
+    all_messages = sorted(
+        list(pet_owner_messages) + list(admin_messages),
+        key=lambda x: x.timestamp
+    )
+
+    messages = [
+        {
+            'id': msg.id,
+            'sender': msg.sender,
+            'receiver': getattr(msg, 'receiver', None).username if isinstance(msg, AdminMessage) else None,
+            'content': msg.content,
+            'timestamp': msg.timestamp.isoformat()
+        }
+        for msg in all_messages
+    ]
+
+    return JsonResponse({'messages': messages})
+
+
+@login_required
+def get_user_messages(request, user_id):
+    messages = Message.objects.filter(user_id=user_id).order_by('timestamp').values('sender', 'content', 'timestamp')
+    return JsonResponse({'messages': list(messages)})
