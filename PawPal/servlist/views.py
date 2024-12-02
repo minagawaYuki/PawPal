@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Pet, Service, Booking
+from .models import Pet, Service, Booking, Message
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import Notification
@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404, redirect
 import json
-
+from admindashboard.models import AdminMessage
 
 @login_required
 def dashboard_view(request):
@@ -33,12 +33,11 @@ def dashboard_view(request):
 @login_required
 def set_booking_id(request, booking_id):
     request.session['booking_id'] = booking_id
-    return redirect('book')  # Redirect to the 'book' view, which will use the session ID
+    return redirect('book')
 
 
 @login_required
 def book_schedule(request):
-    # Retrieve booking_id from query parameters (if provided)
     booking_id = request.session.get('booking_id')
     first_name = request.user.first_name
     last_name = request.user.last_name
@@ -55,6 +54,7 @@ def book_schedule(request):
             'services': Service.objects.all(),
             'first_name': first_name,
             'last_name': last_name,
+            'comment': booking.comment,
         }
     else:  # New booking case
         context = {
@@ -70,6 +70,7 @@ def book_schedule(request):
         service_name = request.POST.get('service')  # Service selected from dropdown
         date = request.POST.get('date')
         time = request.POST.get('time')
+        comment = request.POST.get('comment')
         status = 'pending'
 
         # Check or create the pet
@@ -88,6 +89,7 @@ def book_schedule(request):
             service=service,
             date=date,
             time=time,
+            comment=comment,
             status=status,
         )
 
@@ -101,6 +103,37 @@ def book_schedule(request):
         return redirect('dashboard')
 
     return render(request, 'servlist/booking.html', context)
+
+
+# Messages
+@login_required
+def messages_view(request):
+    if request.method == "POST":
+        # Pet Owner sending a message
+        message_content = request.POST.get('message')
+        if message_content:
+            Message.objects.create(
+                user=request.user,
+                sender=request.user.username,
+                content=message_content
+            )
+            return redirect('messages')
+
+    # Fetch messages sent by the pet owner
+    user_messages = Message.objects.filter(user=request.user).order_by('timestamp')
+
+    # Fetch messages received by the pet owner from the admin
+    admin_messages = AdminMessage.objects.filter(receiver=request.user).order_by('timestamp')
+
+    context = {
+        'user_messages': user_messages,
+        'admin_messages': admin_messages,
+        'user': request.user.username,
+    }
+    return render(request, 'servlist/messages.html', context)
+
+
+
 
 
 @login_required

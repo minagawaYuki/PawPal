@@ -10,4 +10,6 @@ urlpatterns = [
     path("bookings/delete/", views.delete_booking, name="delete_booking"),
     path("ongoing_bookings/", views.ongoing_bookings, name="ongoing_bookings"),
     path("finished_bookings/", views.finished_bookings, name="finished_bookings"),
+    path('adminMessages/', views.admin_messages_view, name='admin_messages'),
+    
 ]
