@@ -6,16 +6,27 @@ from django.contrib.auth.decorators import login_required
 from servlist.models import Booking
 from servlist.models import Booking, Notification, Message
 from .models import AdminMessage, User
-
+from servlist.models import Booking, Notification
+from django.contrib.auth.models import User
+from django.utils.timezone import now
 @login_required
 def admin_dashboard(request):
-    bookings = Booking.objects.filter(status='pending').select_related('user', 'pet', 'service')
-    return render(request, 'admindashboard/admin_dashboard.html', {'bookings': bookings})
+    total_bookings = len(Booking.objects.all())
+    active_users = len(User.objects.all())
+    total_revenue = 1275 * len(Booking.objects.filter(status='finished'))
+    pending_requests = len(Booking.objects.filter(status='pending'))
+    recent_bookings = Booking.objects.exclude(status='canceled').order_by('-id')[:10]
+    return render(request, 'admindashboard/admin_dashboard.html', {'bookings': bookings,
+                                                                   'total_bookings': total_bookings,
+                                                                   'active_users': active_users,
+                                                                   'total_revenue': total_revenue,
+                                                                   'pending_requests': pending_requests,
+                                                                   'recent_bookings': recent_bookings})
 
 @login_required
 def bookings(request):
     bookings = Booking.objects.filter(status='pending').select_related('user', 'pet', 'service')
-    return render(request, 'admindashboard/admin_dashboard.html', {'bookings': bookings})
+    return render(request, 'admindashboard/bookings.html', {'bookings': bookings})
 
 @login_required
 def messages(request):
@@ -24,12 +35,12 @@ def messages(request):
 
 @login_required
 def ongoing_bookings(request):
-    bookings = Booking.objects.filter(status='accepted').select_related('user', 'pet', 'service')
+    bookings = Booking.objects.filter(status='accepted').select_related('user', 'pet', 'service').order_by('-id')
     return render(request, 'admindashboard/ongoing_bookings.html', {'bookings': bookings})
 
 @login_required
 def finished_bookings(request):
-    bookings = Booking.objects.filter(status='finished').select_related('user', 'pet', 'service')
+    bookings = Booking.objects.filter(status='finished').select_related('user', 'pet', 'service').order_by('-id')
     return render(request, 'admindashboard/finished_bookings.html', {'bookings': bookings})
 
 @login_required
@@ -101,6 +112,7 @@ def finish_booking(request):
 
             booking = Booking.objects.get(id=booking_id)
             booking.status = "finished"
+            booking.finish_date = now()
             booking.save()
 
             service_name = booking.service.services if booking.service else "Unknown Service"

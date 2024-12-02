@@ -15,7 +15,7 @@ def dashboard_view(request):
     first_name = request.user.first_name
     last_name = request.user.last_name
     bookings = Booking.objects.filter(user_id=request.user.id, status='pending').select_related('pet', 'service')
-    past_bookings = Booking.objects.filter(user_id=request.user.id).exclude(status='pending').select_related('pet', 'service')
+    past_bookings = Booking.objects.filter(user_id=request.user.id).exclude(status='pending').order_by('-id').select_related('pet', 'service')[:5]
     notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     has_new_notifications = notifications.filter(status='unread').exists()
 
