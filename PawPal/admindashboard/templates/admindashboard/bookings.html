@@ -135,6 +135,9 @@
                                         <button class="delete-button bg-red-100 hover:bg-red-200 text-red-800 px-3 py-1 rounded-full text-xs font-semibold transition-colors" data-action="delete" data-booking-id="{{ booking.id }}" type="button">
                                             Delete
                                         </button>
+                                        <button class="view-comment-button bg-blue-100 hover:bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold transition-colors" data-comment="{{ booking.comment }}" type="button">
+                                            View Comment
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -173,9 +176,47 @@
         </div>
     </div>
 
+    
+    <!-- Comment Modal -->
+    <div id="commentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Pet Owner Comment</h2>
+            <p id="commentContent" class="text-gray-600 mb-6"></p>
+            <div class="flex justify-end">
+                <button id="commentCloseButton" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition-colors">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         const url_bookings = "{% url 'load-bookings' %}";
+        document.addEventListener("DOMContentLoaded", function () {
+    const commentModal = document.getElementById("commentModal");
+    const commentContent = document.getElementById("commentContent");
+    const commentCloseButton = document.getElementById("commentCloseButton");
+
+    document.querySelectorAll(".view-comment-button").forEach(button => {
+        button.addEventListener("click", function () {
+            const comment = this.getAttribute("data-comment");
+            commentContent.textContent = comment || "No comment provided.";
+            commentModal.classList.remove("hidden");
+        });
+    });
+
+    commentCloseButton.addEventListener("click", function () {
+        commentModal.classList.add("hidden");
+    });
+});
+
     </script>
     <script src="{% static 'js/admin_dashboard.js' %}"></script>
+
+    <!-- <script>
+        const url_bookings = "{% url 'load-bookings' %}";
+    </script>
+    <script src="{% static 'js/admin_dashboard.js' %}"></script> -->
 </body>
 </html>
