@@ -78,6 +78,7 @@
         <img src="README/HTML5_log.png" alt="HTML Logo" style="width:50px; height:auto;">
         <img src="README/CSS-Logo.png" alt="CSS Logo" style="width:50px; height:auto;">
         <img src="README/javascript-logo.png" alt="JavaScript Logo" style="width:50px; height:auto;">
+        
     </div>
     <li><strong>Backend:</strong></li>
     <div style="display: flex; gap: 10px;">
@@ -90,6 +91,7 @@
     <li><strong>UI/UX Tools:</strong></li>
     <div style="display: flex; gap: 10px;">
         <img src="README/Figma-Logo.png" alt="Figma Logo" style="width:50px; height:auto;">
+        https://cebuinstituteoftechnology-my.sharepoint.com/personal/markadrian_baring_cit_edu/Documents/PawPal_UI_UX.pdf?login_hint=markadrian.baring%40cit.edu
     </div>
     <li><strong>Project Management:</strong></li>
     <div style="display: flex; gap: 10px;">
