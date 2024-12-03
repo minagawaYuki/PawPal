@@ -91,7 +91,9 @@
     <li><strong>UI/UX Tools:</strong></li>
     <div style="display: flex; gap: 10px;">
         <img src="README/Figma-Logo.png" alt="Figma Logo" style="width:50px; height:auto;">
-        <p>https://cebuinstituteoftechnology-my.sharepoint.com/personal/markadrian_baring_cit_edu/Documents/PawPal_UI_UX.pdf?login_hint=markadrian.baring%40cit.edu</p>
+        <ul>
+        <li>
+        https://cebuinstituteoftechnology-my.sharepoint.com/personal/markadrian_baring_cit_edu/Documents/PawPal_UI_UX.pdf?login_hint=markadrian.baring%40cit.edu</li></ul>
     </div>
     <li><strong>Project Management:</strong></li>
     <div style="display: flex; gap: 10px;">
