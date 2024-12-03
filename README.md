@@ -1,16 +1,15 @@
 <h1>PawPal: Affordable and Reliable Pet Care Services</h1>
     <p>
-        PawPal is a platform dedicated to connecting pet owners with caregivers to provide affordable and reliable pet care 
+        PawPal is a platform dedicated to connecting pet owners to provide and reliable pet care 
         services such as grooming, boarding, and walking. Designed with ease of use and accessibility in mind, PawPal ensures 
-        seamless interactions between pet owners and caregivers through its user-friendly interface and robust features.
+        seamless interactions between pet owners booking through its user-friendly interface and robust features.
     </p>
 
 <h2>Project Overview</h2>
     <p>
         PawPal aims to:
         <ul>
-            <li>Simplify the process of finding trustworthy caregivers for pet owners.</li>
-            <li>Provide caregivers with opportunities to list their services and manage bookings efficiently.</li>
+            <li>Simplify the process of booking for a service for users.</li>
             <li>Ensure a smooth experience through user-centric features like profile management, messaging, and transaction tracking.</li>
         </ul>
     </p>
@@ -19,7 +18,7 @@
 
 <h3>1. User Registration</h3>
     <ul>
-        <li>Users can create an account as either a <strong>Pet Owner</strong>.</li>
+        <li>Users can create an account as a <strong>Pet Owner</strong>.</li>
         <li>Includes essential functionalities:
             <ul>
                 <li><strong>Registration:</strong> Users sign up with email, password, and relevant personal information.</li>
@@ -38,17 +37,20 @@
     <ul>
         <li>Pet owners can:
             <ul>
-                <li>Book services by selecting specific dates, times, and desired options.</li>
+                <li>Book services by selecting specific dates, times, desired options, and include a personal message for their pets needs.</li>
                 <li>Receive notifications for booking confirmations and updates.</li>
+                <li>Simply book a service for their pet in one click after booking the certain service.</li>
             </ul>
         </li>
     </ul>
 
 <h3>5. Transaction History</h3>
     <ul>
-        <li>Users can view their transaction history:
+        <li>Users can/be:
             <ul>
-                <li><strong>Pet Owners:</strong> Track completed, pending, or canceled bookings.</li>
+                <li> Track completed, pending, or canceled bookings.</li>
+                <li> Cancel booked schedules on their own.</li>
+                <li> Notified for each transaction of their booking so they can always be updated.</li>
             </ul>
         </li>
     </ul>
@@ -63,12 +65,12 @@
     <ul>
         <li>Administrators have complete control over:
             <ul>
-                <li>User management: Add, update, or remove user accounts?.</li>
                 <li>Service management: Monitor and modify service listings.</li>
                 <li>System content: Ensure high-quality content across the platform.</li>
             </ul>
         </li>
     </ul>
+    
 
 
 <h2>Technologies Used</h2>
