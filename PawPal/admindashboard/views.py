@@ -194,7 +194,7 @@ def get_user_messages(request, user_id):
             'timestamp': last_message.timestamp.strftime('%Y-%m-%d %H:%M:%S') if last_message else None,
         } if last_message else None
     }
-    return render(request, 'admindashboard/admin_messages.html', context)
+    return JsonResponse(data)
 
 @login_required
 def admin_get_messages(request):
@@ -243,9 +243,24 @@ def admin_get_messages(request):
 
 @login_required
 def get_user_messages(request, user_id):
-    messages = Message.objects.filter(user_id=user_id).order_by('timestamp').values('sender', 'content', 'timestamp')
-    return JsonResponse({'messages': list(messages)})
-=======
+    user = get_object_or_404(User, id=user_id)
+    messages = Message.objects.filter(user=user).order_by('timestamp')
+    last_message = messages.filter(sender='user').last()
+    
+    data = {
+        'username': user.username,
+        'messages': [
+            {
+                'content': message.content,
+                'sender': 'admin' if message.sender == 'admin' else 'user',
+                'timestamp': message.timestamp.strftime('%Y-%m-%d %H:%M:%S')
+            } for message in messages
+        ],
+        'last_user_message': {
+            'content': last_message.content if last_message else None,
+            'timestamp': last_message.timestamp.strftime('%Y-%m-%d %H:%M:%S') if last_message else None,
+        } if last_message else None
+    }
     return JsonResponse(data)
 
 
