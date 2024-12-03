@@ -31,8 +31,8 @@
     <ul>
         <li>See all details about the past and current bookings.</li
     </ul>
-    
 
+    
 <h3>3. Service Booking for Pet Owners</h3>
     <ul>
         <li>Pet owners can:
