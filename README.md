@@ -27,10 +27,11 @@
         </li>
     </ul>
 
-<h3>2. User Dashboardt</h3>
+<h3>2. User Dashboard</h3>
     <ul>
-        <li>See all details about the booking.</li
+        <li>See all details about the past and current bookings.</li
     </ul>
+    
 
 <h3>3. Service Booking for Pet Owners</h3>
     <ul>
