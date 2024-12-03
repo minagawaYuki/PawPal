@@ -27,10 +27,9 @@
         </li>
     </ul>
 
-<h3>2. User Profile Management</h3>
+<h3>2. User Dashboardt</h3>
     <ul>
-        <li><strong>Pet Owners:</strong> Manage personal details and pet information.</li>
-        <li>Profile updates and management are intuitive and accessible.</li>
+        <li>See all details about the booking.</li
     </ul>
 
 <h3>3. Service Booking for Pet Owners</h3>
