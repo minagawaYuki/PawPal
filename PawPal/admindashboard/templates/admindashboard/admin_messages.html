@@ -4,91 +4,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PawPal - Admin Dashboard</title>
+    <title>PawPal - Admin Messages</title>
     <link href="{% static 'css/output.css' %}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
     </style>
 </head>
-<body class="bg-gray-100">
-<div class="max-w-4xl mx-auto p-6">
-    <!-- All User Messages Section -->
-    <section class="bg-white shadow rounded-lg p-6 mb-8">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">All User Messages</h2>
-        <div class="overflow-x-auto border border-gray-200 rounded-lg">
-            <table class="min-w-full text-left text-sm">
-                <thead class="bg-gray-100 text-gray-600 uppercase text-xs font-medium">
-                    <tr>
-                        <th class="px-4 py-3">User</th>
-                        <th class="px-4 py-3">Message</th>
-                        <th class="px-4 py-3">Timestamp</th>
-                        <th class="px-4 py-3">Reply</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200 text-gray-700">
-                    {% for message in pet_owner_messages %}
-                    <tr>
-                        <td class="px-4 py-3">{{ message.user.username }}</td>
-                        <td class="px-4 py-3">{{ message.content }}</td>
-                        <td class="px-4 py-3">{{ message.timestamp }}</td>
-                        <td class="px-4 py-3">
-                            <form method="POST" class="space-y-2">
-                                {% csrf_token %}
-                                <input type="hidden" name="message_id" value="{{ message.id }}">
-                                <textarea 
-                                    name="reply" 
-                                    rows="2" 
-                                    class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500" 
-                                    placeholder="Type your reply..."></textarea>
-                                <button 
-                                    type="submit" 
-                                    class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-                                    Send Reply
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="4" class="px-4 py-3 text-center text-gray-500">No messages found.</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+<body class="bg-gray-100 min-h-screen flex">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white p-6 border-r border-gray-200 flex flex-col h-screen fixed">
+        <div class="flex items-center gap-2 text-2xl font-bold text-blue-600 mb-10">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+            </svg>
+            <span>PawPal</span>
         </div>
-    </section>
+        
+        <nav class="space-y-2 flex-1">
+            <a href="{% url 'admin_dashboard' %}" class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                </svg>
+                Dashboard
+            </a>
+            <a href="{% url 'bookings' %}" class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                </svg>
+                Bookings
+            </a>
+            <a href="{% url 'ongoing_bookings' %}" class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Ongoing Bookings
+            </a>
+            <a href="{% url 'finished_bookings' %}" class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Finished Bookings
+            </a>
+            <a href="{% url 'admin_messages' %}" class="flex items-center gap-3 px-3 py-2 rounded-lg bg-blue-50 text-blue-700 font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+                </svg>
+                Messages
+            </a>
+    </nav>
 
-    <!-- Admin Sent Messages Section -->
-    <section class="bg-white shadow rounded-lg p-6">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Admin Sent Messages</h2>
-        <div class="overflow-x-auto border border-gray-200 rounded-lg">
-            <table class="min-w-full text-left text-sm">
-                <thead class="bg-gray-100 text-gray-600 uppercase text-xs font-medium">
-                    <tr>
-                        <th class="px-4 py-3">Receiver</th>
-                        <th class="px-4 py-3">Message</th>
-                        <th class="px-4 py-3">Timestamp</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200 text-gray-700">
-                    {% for message in admin_messages %}
-                    <tr>
-                        <td class="px-4 py-3">{{ message.receiver.username }}</td>
-                        <td class="px-4 py-3">{{ message.content }}</td>
-                        <td class="px-4 py-3">{{ message.timestamp }}</td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="3" class="px-4 py-3 text-center text-gray-500">No sent messages found.</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <button class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors mt-auto">
+            <i data-lucide="log-out" class="w-5 h-5"></i>
+            Log Out
+        </button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 ml-64 p-8">
+        <header class="bg-white shadow rounded-lg p-4 mb-6 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-gray-900">Admin Messages</h1>
+            <div class="flex items-center gap-4">
+                <button class="text-gray-600 hover:text-blue-600 transition-colors p-2">
+                    <i data-lucide="bell" class="h-6 w-6"></i>
+                </button>
+                <button class="text-gray-600 hover:text-blue-600 transition-colors p-2">
+                    <i data-lucide="settings" class="h-6 w-6"></i>
+                </button>
+                <div class="flex items-center gap-2">
+                    <span class="font-medium">Admin User</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- User List Section -->
+            <section class="lg:col-span-1 bg-white shadow rounded-lg overflow-hidden">
+                <div class="p-4 border-b border-gray-200">
+                    <h2 class="text-lg font-semibold text-gray-800">User List</h2>
+                </div>
+                <div class="overflow-y-auto max-h-[calc(100vh-250px)]">
+                    <ul class="divide-y divide-gray-200">
+                        {% for user in users %}
+                        <li>
+                            <button 
+                                onclick="loadUserMessages({{ user.id }})"
+                                class="w-full px-4 py-3 flex items-center space-x-3 hover:bg-gray-50 transition duration-150 ease-in-out focus:outline-none focus:bg-gray-100"
+                            >
+                                <div class="flex-shrink-0">
+                                    <span class="inline-block h-10 w-10 rounded-full bg-gray-300 text-gray-600 text-center leading-10 font-semibold">
+                                        {{ user.username|first|upper }}
+                                    </span>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-gray-900 truncate">
+                                        {{ user.username }}: {{ user.last_message_content|default:"Never" }}
+                                    </p>
+                                    <p class="text-sm text-gray-500 truncate">
+                                        {{ user.last_message_timestamp }}
+                                    </p>
+                                </div>
+                                <div class="flex-shrink-0">
+                                    <i data-lucide="chevron-right" class="h-5 w-5 text-gray-400"></i>
+                                </div>
+                            </button>
+                        </li>
+                        {% empty %}
+                        <li class="px-4 py-3 text-center text-gray-500">No users found.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </section>
+
+            <!-- User Messages Section -->
+            <section id="user-messages" class="lg:col-span-2 bg-white shadow rounded-lg hidden">
+                <div class="p-4 border-b border-gray-200 flex items-center justify-between">
+                    <h2 class="text-lg font-semibold text-gray-800">Messages with <span id="username" class="text-blue-600"></span></h2>
+                    <button onclick="closeUserMessages()" class="text-gray-400 hover:text-gray-500">
+                        <span class="sr-only">Close messages</span>
+                        <i data-lucide="x" class="h-6 w-6"></i>
+                    </button>
+                </div>
+                <div id="messages-container" class="overflow-y-auto p-4 space-y-4 max-h-[calc(100vh-350px)]"></div>
+                <form id="reply-form" class="p-4 border-t border-gray-200">
+                    {% csrf_token %}
+                    <div class="flex items-center space-x-2">
+                        <textarea 
+                            name="reply" 
+                            id="reply-content"
+                            rows="3" 
+                            class="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Type your reply..."
+                        ></textarea>
+                        <button 
+                            type="button" 
+                            onclick="sendReply()"
+                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        >
+                            <i data-lucide="send" class="h-5 w-5 mr-2"></i>
+                            Send
+                        </button>
+                    </div>
+                </form>
+            </section>
         </div>
-    </section>
-</div>
+    </main>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        let currentUserId;
+
+        function loadUserMessages(userId) {
+            currentUserId = userId;
+            const url = `{% url 'get_user_messages' 0 %}`.replace('0', userId);
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('username').textContent = data.username;
+                    const container = document.getElementById('messages-container');
+                    container.innerHTML = data.messages.map(message => `
+                        <div class="flex ${message.sender === 'admin' ? 'justify-end' : 'justify-start'}">
+                            <div class="max-w-3/4 p-3 rounded-lg ${message.sender === 'admin' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'}">
+                                <p class="text-sm">${message.content}</p>
+                                <p class="text-xs text-gray-500 mt-1">${message.timestamp}</p>
+                            </div>
+                        </div>
+                    `).join('');
+                    document.getElementById('user-messages').classList.remove('hidden');
+                    container.scrollTop = container.scrollHeight;
+                });
+        }
+
+        function closeUserMessages() {
+            document.getElementById('user-messages').classList.add('hidden');
+        }
+
+        function sendReply() {
+            const url = `{% url 'reply_to_message' %}`;
+            const content = document.getElementById('reply-content').value;
+            const username = document.getElementById('username').textContent;
+
+            if (!content.trim()) return alert("Reply cannot be empty.");
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    reply: content,
+                    username: username
+                })
+            }).then(response => {
+                if (response.ok) {
+                    document.getElementById('reply-content').value = '';
+                    loadUserMessages(currentUserId);
+                } else {
+                    alert("Error sending reply.");
+                }
+            });
+        }
+
+        // Add event listener for Enter key in textarea
+        document.getElementById('reply-content').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendReply();
+            }
+        });
+    </script>
 </body>
 </html>

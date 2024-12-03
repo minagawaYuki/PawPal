@@ -34,7 +34,7 @@ class Booking(models.Model):
         ('canceled', 'Canceled'),
         ('finished', 'Finished')
     ])
-    finish_date = models.DateField()
+    finish_date = models.DateField(blank=True, null=True)
     
     def __str__(self):
         return f'Booking {self.id} - {self.pet.pet_name} for {self.service.services} on {self.date}'
