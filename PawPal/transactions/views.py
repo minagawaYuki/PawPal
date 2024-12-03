@@ -9,7 +9,7 @@ from django.contrib import messages
 def transactions(request):
     first_name = request.user.first_name
     last_name = request.user.last_name
-    bookings = Booking.objects.filter(user_id=request.user.id).select_related('pet', 'service')  # Use select_related to fetch related data efficiently
+    bookings = Booking.objects.filter(user_id=request.user.id).select_related('pet', 'service').order_by('-id')  # Use select_related to fetch related data efficiently
     return render(request, 'transactions/transactions.html', {'bookings': bookings, 'first_name': first_name, 'last_name': last_name})
 @login_required
 def cancel_booking(request, booking_id):

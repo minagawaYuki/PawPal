@@ -5,7 +5,8 @@ module.exports = {
             "./register/templates/register/*.{html,js}",
             "./transactions/templates/transactions/*.{html,js}",
             "./admindashboard/templates/admindashboard/*.{html,js}",
-            "./servlist/templates/servlist/*.{html,js}"],
+            "./servlist/templates/servlist/*.{html,js}",
+            "./static/js/*.{html,js}"],
   theme: {
     extend: {
       colors: {
