@@ -79,7 +79,7 @@
         <img src="README/CSS-Logo.png" alt="CSS Logo" style="width:50px; height:auto;">
         <img src="README/javascript-logo.png" alt="JavaScript Logo" style="width:50px; height:auto;">
         
-    </div>
+</div>
     <li><strong>Backend:</strong></li>
     <div style="display: flex; gap: 10px;">
         <img src="README/Node.js_logo.png" alt="Node.js Logo" style="width:50px; height:auto;">
