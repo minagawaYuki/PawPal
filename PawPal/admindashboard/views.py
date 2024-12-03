@@ -9,6 +9,8 @@ from .models import AdminMessage, User
 from servlist.models import Booking, Notification
 from django.contrib.auth.models import User
 from django.utils.timezone import now
+from django.db.models import Subquery, OuterRef
+
 @login_required
 def admin_dashboard(request):
     total_bookings = len(Booking.objects.all())
@@ -158,28 +160,39 @@ def delete_booking(request):
         except Exception as e:
             return JsonResponse({"success": False, "error": str(e)}, status=500)
         
-@login_required
 def admin_messages_view(request):
-    if request.method == "POST":
-        # Admin is sending a reply
-        message_id = request.POST.get('message_id')
-        reply_content = request.POST.get('reply')
-        
-        if message_id and reply_content:
-            original_message = get_object_or_404(Message, id=message_id)
-            Message.objects.create(
-                user=request.user,
-                sender='admin',
-                content=reply_content
-            )
-            return redirect('admin_messages')  # Redirect to the same page after replying
+    latest_messages = Message.objects.filter(
+        user=OuterRef('pk')
+    ).order_by('-timestamp')
+    
+    users = (
+        User.objects.exclude(is_superuser=True)
+        .annotate(
+            last_message_content=Subquery(latest_messages.values('content')[:1]),
+            last_message_timestamp=Subquery(latest_messages.values('timestamp')[:1])
+        )
+    )
+    return render(request, 'admindashboard/admin_messages.html', {'users': users})
 
-    pet_owner_messages = Message.objects.all().order_by('-timestamp')  # Fetch all pet owner messages
-    admin_messages = AdminMessage.objects.all().order_by('-timestamp')  # Fetch admin messages
-
-    context = {
-        'pet_owner_messages': pet_owner_messages,
-        'admin_messages': admin_messages,
+@login_required
+def get_user_messages(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    messages = Message.objects.filter(user=user).order_by('timestamp')
+    last_message = messages.filter(sender='user').last()
+    
+    data = {
+        'username': user.username,
+        'messages': [
+            {
+                'content': message.content,
+                'sender': 'admin' if message.sender == 'admin' else 'user',
+                'timestamp': message.timestamp.strftime('%Y-%m-%d %H:%M:%S')
+            } for message in messages
+        ],
+        'last_user_message': {
+            'content': last_message.content if last_message else None,
+            'timestamp': last_message.timestamp.strftime('%Y-%m-%d %H:%M:%S') if last_message else None,
+        } if last_message else None
     }
     return render(request, 'admindashboard/admin_messages.html', context)
 
@@ -232,3 +245,18 @@ def admin_get_messages(request):
 def get_user_messages(request, user_id):
     messages = Message.objects.filter(user_id=user_id).order_by('timestamp').values('sender', 'content', 'timestamp')
     return JsonResponse({'messages': list(messages)})
+=======
+    return JsonResponse(data)
+
+
+@csrf_exempt
+@login_required
+def reply_to_message(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        reply_content = data.get('reply')
+        username = data.get('username')
+
+        user = get_object_or_404(User, username=username)
+        Message.objects.create(user=user, sender='admin', content=reply_content)
+        return JsonResponse({'success': True})
