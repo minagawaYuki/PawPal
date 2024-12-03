@@ -33,7 +33,7 @@
         <li>Profile updates and management are intuitive and accessible.</li>
     </ul>
 
-<h3>4. Service Booking for Pet Owners</h3>
+<h3>3. Service Booking for Pet Owners</h3>
     <ul>
         <li>Pet owners can:
             <ul>
@@ -44,13 +44,24 @@
         </li>
     </ul>
 
+<h3>4. Pet Owner Dashboard</h3>
+    <ul>
+        <li>Pet owner can:
+            <ul>
+                <li>See their current Bookings and its Status</li>
+                <li>Book past bookings in 1 click</li>
+                <li> Notified for each transaction of their booking so they can always be updated.</li>
+            </ul>
+        </li>
+    </ul>
+
+    
 <h3>5. Transaction History</h3>
     <ul>
         <li>Users can/be:
             <ul>
                 <li> Track completed, pending, or canceled bookings.</li>
                 <li> Cancel booked schedules on their own.</li>
-                <li> Notified for each transaction of their booking so they can always be updated.</li>
             </ul>
         </li>
     </ul>
@@ -65,13 +76,39 @@
     <ul>
         <li>Administrators have complete control over:
             <ul>
-                <li>Service management: Monitor and modify service listings.</li>
+                <li>Service management: Monitor service listings.</li>
                 <li>System content: Ensure high-quality content across the platform.</li>
             </ul>
         </li>
     </ul>
-    
 
+<h3>8. Admin Booking</h3>
+    <ul>
+        <li>Administrators have complete control over:
+            <ul>
+                <li>Service management: Modify service listings.</li>
+            </ul>
+        </li>
+    </ul>
+
+<h3>9. Admin Monitor Bookings</h3>
+    <ul>
+        <li>Administrators can see:
+            <ul>
+                <li>Ongoing Bookings for Users.</li>
+                <li>Finished Bookings for Users.</li>
+            </ul>
+        </li>
+    </ul>
+
+<h3>10. Admin Messages</h3>
+    <ul>
+        <li>Administrators can:
+            <ul>
+                <li>Message Different Users.</li>
+            </ul>
+        </li>
+    </ul>
 
 <h2>Technologies Used</h2>
 <ul>
